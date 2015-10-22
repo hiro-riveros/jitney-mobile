@@ -1,0 +1,35 @@
+<ion-view class="map-view-jitney">
+	<ion-content>
+		<section class="map-content">
+			<ui-gmap-google-map center="map.center" zoom="map.zoom" options="options"></ui-gmap-google-map>
+			<div class="row ui-buttons">
+				<div class="col s12">
+					<button class="btn waves-effect waves-light btn-large"
+									id="btn-add-passenger" 
+									type="submit" 
+									name="action" 
+									ng-click="addPassenger()"
+									ng-class="{ success: passenger > 0 && passenger < 1, warm: passenger == 2, danger: passenger == 3 }">
+						<i class="icon ion-plus-round"></i>
+					</button>
+					<button class="btn waves-effect waves-light btn-large" 
+									type="submit" 
+									name="action"
+									id="btn-remove-passenger"
+									ng-click="removePassenger()"
+									ng-class="{ success: passenger >= 0 && passenger <= 1, warm: passenger == 2, danger: passenger == 3 }">
+						<i class="icon ion-minus-round"></i>
+					</button>
+					<a class="btn-floating btn-large waves-effect waves-light light-blue darken-4" ng-click="goToConfigurations()">
+						<i class="icon ion-gear-b"></i>
+					</a>
+				</div>
+			</div>
+			<div class="row search-passenger">
+				<button class="btn waves-effect waves-light btn-large btn-search-passenger" type="submit" name="action">
+					activar busqueda <i class="icon ion-navigate"></i>
+				</button>
+			</div>
+		</section>
+	</ion-content>
+</ion-view>
