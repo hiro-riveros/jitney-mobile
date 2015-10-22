@@ -1,0 +1,28 @@
+<ion-view class="login-view">
+  <ion-content scroll-y="false">
+    <section class="login-content">
+      <div class="pattern"></div>
+    	<div class="row form-content">
+    		<div class="col s12">
+        <div class="row">
+          <div class="input-field col s12">
+            <input type="text" class="validate" ng-model="user.email">
+            <label for="email">Email</label>
+          </div>
+        </div>
+    		<div class="row">
+          <div class="input-field col s12">
+            <input type="password" class="validate" ng-model="user.password">
+            <label for="password">Password</label>
+          </div>
+        </div>
+
+    		  <button class="btn waves-effect waves-light btn-login" type="button" name="action" ng-click="login('mapJitney')">Login</button>
+    		  <br /><br />
+    			<button class="btn waves-effect waves-light btn-login-facebook" type="button" name="facebook" ng-click="login('mapPassengger')"> facebook
+    			</button>
+    		</div>
+    	</div>
+    </section>
+  </ion-content>
+</ion-view>

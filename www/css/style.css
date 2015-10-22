@@ -1,1 +1,122 @@
 /* Empty. Add your own CSS if you like */
+
+
+/*
+===========================
+	LOGIN VIEW
+===========================
+*/
+.login-view {
+	background-color: #2D4157;
+	background-image: url('../img/image-2.jpg');
+	background-position: center center;
+	background-repeat: no-repeat;
+	background-size: cover;
+	opacity: 0.9;
+}
+
+.login-content{
+	height: 640px;
+	width: inherit;
+}
+
+.pattern{
+	position: absolute;
+	left: 0;
+	top: 0;
+	background: url('../img/pattern.png') 0 0 repeat;
+	width: 100%;
+	height:100%;
+	opacity:0.2;
+}
+
+.form-content{
+	margin: 0 auto;
+	top: 32%;
+	position: relative;
+	width: 70%;
+}
+
+.form-content input[type=text],
+.form-content input[type=password], 
+.form-content input[type=email] {
+	color: #ffffff;
+}
+
+.btn-login,
+.btn-login-facebook {
+	width: 100%;
+}
+
+.btn-login-facebook {
+	background-color: #4e69a2;
+}
+
+/*
+===========================
+	SIGN IN VIEW
+===========================
+*/
+.btn-signin {
+	width: 100%;
+}
+
+/*
+===========================
+	MAP JITNEY VIEW
+===========================
+*/
+
+.map-view-jitney {
+	width: 100%;
+	height: 640px;
+}
+
+.angular-google-map-container { 
+	position: relative;
+	height: 640px;
+}
+.gm-style-mtc,
+.gmnoprint {
+  display: none;
+}
+
+.ui-buttons{
+	position: absolute;
+	top: 30px;
+	z-index: 1;
+}
+
+.ui-buttons .btn-large i {
+  font-size: 3.6rem;
+}
+
+.ui-buttons button {
+	margin-right: 20px;
+}
+.ui-buttons button.success {
+	background-color: #00897b;
+}
+.ui-buttons button.warm {
+	background-color: #fdd835;
+}
+.ui-buttons button.danger {
+	background-color: #b71c1c;
+}
+
+
+.ui-buttons button:nth-child(2) {
+	margin-right: 50px;		 
+}
+
+.search-passenger{
+	position: absolute;
+	top: 85%;
+	z-index: 1;
+}
+
+.btn-search-passenger{
+	width: 80%;
+	margin: 0 auto;
+}
+
