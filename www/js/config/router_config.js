@@ -21,10 +21,17 @@
 		})
 
 		// sign in view
-		.state('signin', {
-			url: '/signin',
-			templateUrl: 'templates/signin.html',
+		.state('signup', {
+			url: '/signup',
+			templateUrl: 'templates/signup.html',
 			controller: 'SignInController'
+		})
+
+		// edit profile view
+		.state('editProfile', {
+			url: '/edit_profile',
+			templateUrl: 'templates/edit_profile.html',
+			controller: 'EditProfileController'
 		})
 
 		// map view
@@ -35,7 +42,7 @@
 		})
 
 		// map view
-		.state('mapPassengger', {
+		.state('mapPassenger', {
 			url: '/map_passenger',
 			templateUrl: 'templates/map_passenger.html',
 			controller: 'MapController'

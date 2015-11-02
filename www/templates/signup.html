@@ -1,0 +1,62 @@
+<ion-view class="signup-view">
+  <ion-content>
+    <section class="signup-content">
+      <div class="row">
+        <form class="col s12">
+          <div class="row">
+            <div class="input-field col s6">
+              <input type="text" 
+                     class="validate"
+                     ng-model="user.firstName">
+                     <label>nombre</label>
+            </div>
+            <div class="input-field col s6">
+              <input type="text"
+                     class="validate"
+                     ng-model="user.lastName">
+                     <label for="last_name">apellido</label>
+            </div>
+          </div>
+          <div class="row">
+            <div class="input-field col s12">
+              <input type="email" 
+                     class="validate" 
+                     ng-model="user.email">
+                     <label>email</label>
+            </div>
+          </div>
+          <div class="row">
+            <div class="input-field col s12">
+              <input type="email"
+                     class="validate" 
+                     ng-model="user.nickName">
+                     <label>nickname</label>
+            </div>
+          </div>
+          <div class="row">
+            <div class="input-field col s12">
+              <input type="password"
+                     class="validate"
+                     ng-model="user.password">
+                     <label>password</label>
+            </div>
+          </div>
+          <div class="row">
+            <div class="input-field col s12">
+              <input type="password"
+                     class="validate"
+                     ng-model="user.passwordConfirm">
+                     <label>confirmar password</label>
+            </div>
+          </div>
+          <button class="btn waves-effect waves-light btn-signup" 
+                  type="submit"
+                  name="action">
+                  sign in
+                  <i class="icon ion-log-in"></i>
+          </button>
+        </form>
+      </div>
+    </section>
+  </ion-content>
+</ion-view>

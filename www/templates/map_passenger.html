@@ -1,9 +1,33 @@
 <ion-view class="map-view-passenger">
 	<ion-content>
 		<section class="map-content">
-			<ui-gmap-google-map center="map.center" zoom="map.zoom" options="options"></ui-gmap-google-map>
+			<ui-gmap-google-map center="map.center" zoom="map.zoom" options="options" data-tap-disabled="true">
+			 	<ui-gmap-markers models="passengers" 
+			 									 coords="'self'" 
+			 									 icon="'icon'"
+			 									 idKey="'id'">
+        </ui-gmap-markers>
+			</ui-gmap-google-map>
+			<div class="row passenger-ui-buttons">
+				<div class="col s6"></div>
+				<div class="col s6 btn-config-container">
+					<a class="btn-floating btn-large waves-effect waves-light light-blue darken-4" 
+						 ng-click="goToConfigurations()">
+					<i class="icon ion-gear-b"></i>
+				</a>
+				</div>
+			</div>
+			<div class="row search-jitney">
+				<div class="col s12">
+					<button class="btn waves-effect waves-light btn-large btn-search-jitney" 
+									type="submit" 
+									name="action"
+									ng-click="searchJitnies()">
+									buscar colectivo
+									<i class="icon ion-navigate"></i>
+					</button>
+				</div>
+			</div>
 		</section>
 	</ion-content>
 </ion-view>
-
-

@@ -1,5 +1,22 @@
 /* Empty. Add your own CSS if you like */
 
+/*
+==================================
+	IONIC AND MATERIALIZE OVERWRITES
+==================================
+*/
+
+.popup-head {
+	background-color: #2D4157;
+
+}
+.popup-head .popup-title {
+	color: #ffffff;
+}
+
+.btn-flat {
+	padding: 0px 1rem;
+}
 
 /*
 ===========================
@@ -37,10 +54,16 @@
 	width: 70%;
 }
 
-.form-content input[type=text],
-.form-content input[type=password], 
-.form-content input[type=email] {
+.form-content .input-field input,
+.form-content .input-field label {
 	color: #ffffff;
+}
+.form-content .input-field input {
+  font-size: 4vw;
+}
+
+.form-content .input-field label {
+	font-size: 5vw;
 }
 
 .btn-login,
@@ -52,12 +75,43 @@
 	background-color: #4e69a2;
 }
 
+.btn-redirect-signup {
+	color: #ffffff;
+}
+
 /*
 ===========================
-	SIGN IN VIEW
+	SIGN UP VIEW
 ===========================
 */
-.btn-signin {
+
+.signup-view,
+.edit-profile-view{
+	background-color: #2D4157;
+	background-image: url('../img/image-2.jpg');
+	background-position: center center;
+	background-repeat: no-repeat;
+	background-size: cover;
+	opacity: 0.9;
+}
+
+.signup-content,
+.edit-profile-content{
+	padding-top: 40px;
+}
+
+.signup-content .input-field input,
+.edit-profile-content .input-field input{
+	color: #ffffff;
+}
+
+.signup-content .input-field label,
+.edit-profile-content .input-field label {
+	color: #ffffff;
+	font-size: 5vw;
+}
+
+.btn-signup {
 	width: 100%;
 }
 
@@ -81,19 +135,26 @@
   display: none;
 }
 
-.ui-buttons{
+.ui-buttons,
+.passenger-ui-buttons {
 	position: absolute;
 	top: 30px;
 	z-index: 1;
 }
 
-.ui-buttons .btn-large i {
+.btn-config-container {
+	padding-left: 195px !important;
+}
+
+.ui-buttons .btn-large i,
+.passenger-ui-buttons .btn-large i {
   font-size: 3.6rem;
 }
 
 .ui-buttons button {
 	margin-right: 20px;
 }
+
 .ui-buttons button.success {
 	background-color: #00897b;
 }
@@ -104,19 +165,42 @@
 	background-color: #b71c1c;
 }
 
-
 .ui-buttons button:nth-child(2) {
 	margin-right: 50px;		 
 }
 
-.search-passenger{
+.search-passenger,
+.search-jitney {
 	position: absolute;
 	top: 85%;
 	z-index: 1;
 }
 
-.btn-search-passenger{
-	width: 80%;
-	margin: 0 auto;
+.btn-search-passenger,
+.btn-search-jitney{
+	width: 100%;
 }
 
+/*
+==============================
+	CONFIGURATION VIEW
+==============================
+*/
+
+
+.configuration-view .bar-light {
+	background-color: #2D4157;
+	color: #ffffff;
+}
+
+.configuration-view .bar-light .title{
+	color: #ffffff;
+}
+
+.configuration-view .item.item-toggle {
+	color: #b2b2b2;
+}
+.configuration-view .configuration-ui-button {
+	position: relative;
+	top: 300px;
+}
