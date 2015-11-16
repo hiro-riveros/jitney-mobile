@@ -5,8 +5,8 @@
 */
 
 (function() {
-	this.app.controller('MapController', ['$scope', '$geolocation', '$log', '$http', '$state', '$ionicPopup', 'uiGmapGoogleMapApi',
-		function($scope, $geolocation, $log, $http, $state, $ionicPopup, uiGmapGoogleMapApi){
+	this.app.controller('MapController', ['$scope', '$geolocation', '$log', '$http', '$state', '$ionicPopup', 'uiGmapGoogleMapApi', 'LocalStorageSingletonServices', 'Passenger',
+		function($scope, $geolocation, $log, $http, $state, $ionicPopup, uiGmapGoogleMapApi, LocalStorageSingletonServices, Passenger){
 	/*
 	=========================================
 		SCOPE DEFINITION
@@ -42,9 +42,11 @@
 					longitude: position.coords.longitude,
 					icon: '../../../img/passenger-icon-24.png'
 				});
+
+				$log.info($scope.passengers[0]);
 				var lat = -33.4136139, lon = -70.5828831;
 				setInterval(function() {
-					$log.info('from', $scope.passengers[1]);
+					// $log.info('from', $scope.passengers[1]);
 					$scope.$apply(function () {
 						lon -= 0.0000010;
 						$scope.passengers[1] = {
@@ -53,7 +55,7 @@
 							longitude: lon.toFixed(7),
 							icon: '../../../img/jitney-icon-24.png'
 						};
-						$log.info('to', $scope.passengers[1]);
+						// $log.info('to', $scope.passengers[1]);
         	});
 				}, 10);
 			});
