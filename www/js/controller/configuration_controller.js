@@ -45,7 +45,7 @@
 	    						// TODO SEND INFORMATION TO SERVER
 	    						return $scope.configuration.frequentDestiny;
 	    					};
-	    				} 
+	    				}
 	    			}
 	    		]
 	    	});

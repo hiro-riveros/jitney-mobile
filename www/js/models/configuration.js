@@ -8,13 +8,14 @@
 * | Name              | Type           |
 * |-------------------|----------------|
 * | @id               | int            |
+* | @user_id          | int            |
 * | @automatic_map    | boolean        |
 * | @frequent_destiny | string         |
 *
 */
 
 (function() {
-	this.app.factory('Configuration', function(restmod, ENV) {
-    return restmod.model('/configuration');
+	this.app.factory('Configuration', function($http, $q, ENV) {
+
   });
 }).call(this);
