@@ -1,6 +1,6 @@
 <ion-view class="login-view">
   <ion-content scroll-y="false">
-    <section class="login-content">
+    <section class="login-content" id="login-content">
       <div class="pattern"></div>
     	<div class="row form-content">
     		<div class="col s12">
@@ -23,7 +23,7 @@
     		  <button class="btn waves-effect waves-light btn-login" 
                   type="button" 
                   name="action" 
-                  ng-click="login('mapJitney')">
+                  ng-click="login()">
                   Login
           </button>
     		  <br /><br />
@@ -34,12 +34,58 @@
                   login with facebook
     			</button>
           <br /><br />
-          <a class="waves-effect waves-teal btn-flat btn-redirect-signup" 
-             ui-sref="signup">
+          <a class="waves-effect waves-teal btn-flat btn-redirect-signup text-center" 
+             ng-click="activeteSignup()">
              no tienes una cuenta?
           </a>
     		</div>
     	</div>
     </section>
+
+    <section class="signup-content hidden" id="signup-content">
+      <div class="row">
+        <div class="input-field col s12">
+          <input type="text" 
+                 class="validate" 
+                 ng-model="user.email"
+                 required="true"
+                 id="email">
+          <label for="email">Email</label>
+        </div>
+      </div>
+      <div class="row">
+        <div class="input-field col s12">
+          <input type="password" 
+                 class="validate" 
+                 ng-model="user.password"
+                 required="true"
+                 id="password">
+          <label for="password">Password</label>
+        </div>
+      </div>
+      <div class="row">
+        <div class="input-field col s12">
+          <input type="password" 
+                 class="validate" 
+                 ng-model="user.passwordConfirmation"
+                 required="true"
+                 id="passwordConfirmation">
+          <label for="password">Reingresar Password</label>
+        </div>
+      </div>
+      <button class="btn waves-effect waves-light btn-login" 
+              type="button" 
+              name="action" 
+              ng-click="signUp()">
+              Login
+      </button>
+      <br /><br />
+      <a class="waves-effect waves-teal btn-flat btn-redirect-login text-center" 
+        ng-click="activeteLogin()">
+        tienes una cuenta?
+      </a>
+    </section>
+
+
   </ion-content>
 </ion-view>

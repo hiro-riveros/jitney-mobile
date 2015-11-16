@@ -21,13 +21,14 @@
             <div class="input-field col s12">
               <input type="email" 
                      class="validate" 
-                     ng-model="user.email">
+                     ng-model="user.email" 
+                     required="true">
                      <label>email</label>
             </div>
           </div>
           <div class="row">
             <div class="input-field col s12">
-              <input type="email"
+              <input type="text"
                      class="validate" 
                      ng-model="user.nickName">
                      <label>nickname</label>
@@ -37,7 +38,8 @@
             <div class="input-field col s12">
               <input type="password"
                      class="validate"
-                     ng-model="user.password">
+                     ng-model="user.password"
+                     required="true">
                      <label>password</label>
             </div>
           </div>
@@ -45,14 +47,16 @@
             <div class="input-field col s12">
               <input type="password"
                      class="validate"
-                     ng-model="user.passwordConfirm">
+                     ng-model="user.passwordConfirmation"
+                     required="true">
                      <label>confirmar password</label>
             </div>
           </div>
           <button class="btn waves-effect waves-light btn-signup" 
                   type="submit"
-                  name="action">
-                  sign in
+                  name="action"
+                  ng-click="signUp()">
+                  sign up
                   <i class="icon ion-log-in"></i>
           </button>
         </form>
