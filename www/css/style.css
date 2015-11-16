@@ -18,6 +18,14 @@
 	padding: 0px 1rem;
 }
 
+.hidden {
+	display: none;
+}
+
+.input-error {
+	border-bottom: 1px solid red !important;
+	box-shadow: 0 1px 0 0 red !important;
+}
 /*
 ===========================
 	LOGIN VIEW
@@ -75,17 +83,25 @@
 	background-color: #4e69a2;
 }
 
+.btn-redirect-login,
 .btn-redirect-signup {
 	color: #ffffff;
+  width: 100%;
+}
+
+.signup-content {
+	position: relative;
+  top: 160px;
+  width: 80%;
+  margin: 0 auto;
 }
 
 /*
 ===========================
-	SIGN UP VIEW
+	EDIT PROFILE VIEW
 ===========================
 */
 
-.signup-view,
 .edit-profile-view{
 	background-color: #2D4157;
 	background-image: url('../img/image-2.jpg');
@@ -95,7 +111,6 @@
 	opacity: 0.9;
 }
 
-.signup-content,
 .edit-profile-content{
 	padding-top: 40px;
 }

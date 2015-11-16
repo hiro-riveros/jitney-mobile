@@ -5,12 +5,12 @@
 */
 
 (function() {
-	this.app.config(function($stateProvider, $urlRouterProvider) {
-
+	this.app.config(function($stateProvider, $urlRouterProvider, $httpProvider) {
 		// Ionic uses AngularUI Router which uses the concept of states
 		// Learn more here: https://github.com/angular-ui/ui-router
 		// Set up the various states which the app can be in.
 		// Each state's controller can be found in controllers.js
+		$httpProvider.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded; charset=UTF-8';
 		$stateProvider
 
 		// login view
@@ -24,14 +24,19 @@
 		.state('signup', {
 			url: '/signup',
 			templateUrl: 'templates/signup.html',
-			controller: 'SignInController'
+			controller: 'SignUpController'
 		})
 
 		// edit profile view
 		.state('editProfile', {
 			url: '/edit_profile',
 			templateUrl: 'templates/edit_profile.html',
-			controller: 'EditProfileController'
+			controller: 'EditProfileController',
+			resolve: {
+				user: ['LocalStorageSingletonServices', function(LocalStorageSingletonServices) {
+					return LocalStorageSingletonServices.getCurrentUser();
+				}]
+			}
 		})
 
 		// map view

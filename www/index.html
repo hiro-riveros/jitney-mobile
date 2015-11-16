@@ -19,11 +19,12 @@
     <script src="lib/jquery/dist/jquery.js"></script>
     <script src="lib/Materialize/dist/js/materialize.js"></script>
     <script src="lib/angular-simple-logger/dist/angular-simple-logger.js"></script>
-    <script src="lib/maps.google.com/maps.googleapis.com.js"></script>
+    <script src="//maps.googleapis.com/maps/api/js"></script>
     <script src="lib/maps.google.com/map.js"></script>
     <script src="lib/angular-google-maps/dist/angular-google-maps.js"></script>
     <script src="lib/ngGeolocation/ngGeolocation.js"></script>
     <script src="lib/angular-restmod/dist/angular-restmod-bundle.js"></script>
+    <script src="lib/ngstorage/ngStorage.js"></script>
 
     <!-- cordova script (this will be a 404 during development) -->
     <script src="cordova.js"></script>
@@ -41,7 +42,10 @@
     <script src="js/controller/configuration_controller.js"></script>
     <script src="js/controller/edit_profile_controller.js"></script>
     <script src="js/models/user.js"></script>
+    <script src="js/models/passenger.js"></script>
+    <script src="js/models/jitney.js"></script>
     <script src="js/models/configuration.js"></script>
+    <script src="js/services/local_storage_service.js"></script>
     
   </head>
   <body ng-app="jitney">
