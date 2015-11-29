@@ -24,9 +24,9 @@
 				$http({
 				  method: 'GET',
 				  url: ENV.API_URL + 'jitneys'
-				}).then(function(jitneys) {
-					if (jitneys.data !== undefined && jitneys.data !== '') {
-							defer.resolve(jitneys);
+				}).then(function(jitnies) {
+					if (jitnies.data !== undefined && jitnies.data !== '') {
+							defer.resolve(jitnies.data);
 					} else {
 						return {
 							error: 'error al intentar obtener los pasajeros'
@@ -37,7 +37,10 @@
 				});
 				return defer.promise;
 			},
-			updatePassengerPosition: function (position) {
+			getJitney: function(id) {
+				return $http.get( ENV.API_URL + 'jitneys/' + id);
+			},
+			updateJitneyPosition: function (position) {
 				var defer = $q.defer();
 				$http({
 				  method: 'PUT',
@@ -60,7 +63,7 @@
 				});
 				return defer.promise;
 			},
-			deletePassengerPosition: function (jitney) {
+			deleteJitneyPosition: function (jitney) {
 				var defer = $q.defer();
 				$http({
 				  method: 'DELETE',
@@ -77,6 +80,24 @@
 						};
 					};
 				}, function(reason) {
+					defer.reject(reason.data);
+				});
+				return defer.promise;
+			},
+			update: function(Jitney) {
+				var defer = $q.defer();
+				$http.put(ENV.API_URL + 'jitneys/' + Jitney.id, {
+					id: Jitney.id,
+					automatic_map: Jitney.automatic_map
+				}).then(function(Jitney) {
+					if (Jitney !== undefined) {
+						var jitney = {
+							id: Jitney.id,
+							automatic_map: Jitney.automatic_map
+						};
+						defer.resolve(jitney);
+					};
+				}, function (reason) {
 					defer.reject(reason.data);
 				});
 				return defer.promise;

@@ -2,7 +2,14 @@
 	<ion-content>
 		<section class="map-content">
 			<ui-gmap-google-map center="map.center" zoom="map.zoom" options="options" data-tap-disabled="true">
-				<ui-gmap-markers models="jitnies" 
+			<!-- <ui-gmap-circle center="map.center"></ui-gmap-circle>    -->
+				<ui-gmap-marker
+								icon="jitney.icon"
+								idKey="jitney.id"
+				        coords="jitney.coords"
+				        control="markersControl">
+				</ui-gmap-marker>
+			 	<ui-gmap-markers models="passengers" 
 			 									 coords="'self'" 
 			 									 icon="'icon'"
 			 									 idKey="'id'">
@@ -15,7 +22,7 @@
 									type="submit" 
 									name="action" 
 									ng-click="addPassenger()"
-									ng-class="{ success: passenger > 0 && passenger < 1, warm: passenger == 2, danger: passenger == 3 }">
+									ng-class="{ success: car.passengers > 0 && car.passengers < 1, warm: car.passengers == 2, danger: car.passengers == 3 }">
 						<i class="icon ion-plus-round"></i>
 					</button>
 					<button class="btn waves-effect waves-light btn-large" 
@@ -23,7 +30,7 @@
 									name="action"
 									id="btn-remove-passenger"
 									ng-click="removePassenger()"
-									ng-class="{ success: passenger >= 0 && passenger <= 1, warm: passenger == 2, danger: passenger == 3 }">
+									ng-class="{ success: car.passengers >= 0 && car.passenger <= 1, warm: car.passengers == 2, danger: car.passengers == 3 }">
 									<i class="icon ion-minus-round"></i>
 					</button>
 					<a class="btn-floating btn-large waves-effect waves-light light-blue darken-4" 

@@ -19,15 +19,11 @@
 (function() {
 	this.app.factory('Car', function($http, $q, ENV) {
 		return {
-
-			getCar: function(jitneyId) {
+			getCar: function(carId) {
 				var defer = $q.defer();
 				$http({
 				  method: 'GET',
-				  url: ENV.API_URL + 'cars',
-				  params: {
-				  	jitney_id: jitneyId
-				  }
+				  url: ENV.API_URL + 'cars/' + carId
 				}).then(function(Car) {
 					if (Car !== undefined) {
 						var car = {
@@ -39,30 +35,21 @@
 							passengers: Car.data.passengers
 						};
 							defer.resolve(car);
-						};
 					} else {
-						return {
-							error: 'error al intentar obtener los pasajeros'
-						};
+							return {
+								error: 'error al intentar obtener los pasajeros'
+							};
 					};
 				}, function(reason) {
 					defer.reject(reason.data);
 				});
 				return defer.promise;
 			},
-			update: function (Car) {
+			updateCarPassengers: function (Car) {
 				var defer = $q.defer();
-				$http({
-				  method: 'PUT',
-				  url: ENV.API_URL + 'cars',
-				  params: {
-						id: Car.id,
-						jitney_id: Car.jitneyId,
-						patent: Car.patent,
-						model: Car.ta.model,
-						route: Car.route,
-						passengers: Car.passengers
-				  }
+				$http.put(ENV.API_URL + 'cars/' + Car.id, {
+					jitney_id: Car.jitneyId,
+					passengers: Car.passengers
 				}).then(function(Car) {
 					if (Car !== undefined) {
 						var car = {
@@ -73,15 +60,9 @@
 							route: Car.data.route,
 							passengers: Car.data.passengers
 						};
-							defer.resolve(car);
-						};
-						defer.resolve(passenger);
-					} else {
-						return {
-							error: 'error al intentar actualizar tu posición'
-						};
+						defer.resolve(car);
 					};
-				}, function(reason) {
+				}, function (reason) {
 					defer.reject(reason.data);
 				});
 				return defer.promise;
