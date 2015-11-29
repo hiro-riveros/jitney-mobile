@@ -1,0 +1,35 @@
+<ion-view class="configuration-view">
+  <ion-content>
+    <div class="bar bar-header bar-light">
+      <h1 class="title">configuraciones</h1>
+    </div>
+    <br><br>
+    <ul class="list">
+      <li class="item">
+        <button class="button button-clear button-stable" ng-click="goTo('editProfile')">
+          editar perfil
+        </button>
+      </li>
+      <li class="item item-toggle">
+        activar mapa automatico
+        <label class="toggle toggle-possitive">
+          <input type="checkbox" ng-model="jitney.automatic_map" ng-click="saveConfiguration()">
+          <div class="track">
+            <div class="handle"></div>
+          </div>
+        </label>
+      </li>
+    </ul>
+    <div class="row configuration-ui-button">
+      <div class="col s12">
+        <button class="btn waves-effect waves-light btn-large btn-search-passenger" 
+                type="submit" 
+                name="action"
+                ng-click="goTo('map')">
+                <i class="icon ion-chevron-left"></i>
+                volver al mapa
+        </button>
+      </div>
+    </div>
+  </ion-content>
+</ion-view>

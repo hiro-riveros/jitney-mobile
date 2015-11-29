@@ -3,22 +3,17 @@
     <div class="bar bar-header bar-light">
       <h1 class="title">configuraciones</h1>
     </div>
-    <br><br
+    <br><br>
     <ul class="list">
       <li class="item">
         <button class="button button-clear button-stable" ng-click="goTo('editProfile')">
           editar perfil
         </button>
       </li>
-      <li class="item">
-        <button class="button button-clear button-stable" ng-click="goTo('addFrequendDestiny')">
-          agregar destino frecuente
-        </button>
-      </li>
       <li class="item item-toggle">
         activar mapa automatico
         <label class="toggle toggle-possitive">
-          <input type="checkbox" ng-click="addMapConfiguration()">
+          <input type="checkbox" ng-model="passenger.automatic_map" ng-click="saveConfiguration()">
           <div class="track">
             <div class="handle"></div>
           </div>
