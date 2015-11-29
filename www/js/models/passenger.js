@@ -26,7 +26,7 @@
 				  url: ENV.API_URL + 'passengers'
 				}).then(function(passengers) {
 					if (passengers !== undefined) {
-							defer.resolve(passengers);
+							defer.resolve(passengers.data);
 					} else {
 						return {
 							error: 'error al intentar obtener los pasajeros'
@@ -36,6 +36,9 @@
 					defer.reject(reason.data);
 				});
 				return defer.promise;
+			},
+			getPassenger: function(id) {
+				return $http.get( ENV.API_URL + 'passengers/' + id);
 			},
 			updatePassengerPosition: function (Position) {
 				var defer = $q.defer();
@@ -60,13 +63,13 @@
 				});
 				return defer.promise;
 			},
-			deletePassengerPosition: function (passenger) {
+			deletePassengerPosition: function (Passenger) {
 				var defer = $q.defer();
 				$http({
 				  method: 'DELETE',
 				  url: ENV.API_URL + 'passengers',
 				  params: {
-				  	user_id: passenger.userId,
+				  	passenger_id: Passenger.userId,
 				  }
 				}).then(function(passenger) {
 					if (passenger !== undefined) {
@@ -77,6 +80,24 @@
 						};
 					};
 				}, function(reason) {
+					defer.reject(reason.data);
+				});
+				return defer.promise;
+			},
+			update: function(Passenger) {
+				var defer = $q.defer();
+				$http.put(ENV.API_URL + 'passengers/' + Passenger.id, {
+					id: Passenger.id,
+					automatic_map: Passenger.automatic_map
+				}).then(function(Passenger) {
+					if (Passenger !== undefined) {
+						var passenger = {
+							id: Passenger.id,
+							automatic_map: Passenger.automatic_map
+						};
+						defer.resolve(passenger);
+					};
+				}, function (reason) {
 					defer.reject(reason.data);
 				});
 				return defer.promise;

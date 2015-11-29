@@ -5,14 +5,20 @@
 */
 
 (function() {
-	this.app.controller('MapController', ['$scope', '$geolocation', '$log', '$http', '$state', '$ionicPopup', 'uiGmapGoogleMapApi', 'LocalStorageSingletonServices', 'Passenger',
-		function($scope, $geolocation, $log, $http, $state, $ionicPopup, uiGmapGoogleMapApi, LocalStorageSingletonServices, Passenger){
+	this.app.controller('MapController', ['$scope', '$geolocation', '$log', '$http', '$state', '$timeout', '$ionicPopup', 'uiGmapGoogleMapApi', 'LocalStorageSingletonServices', 'Passenger', 'passenger', 'Position', 'Jitney', 'jitneys',
+		function($scope, $geolocation, $log, $http, $state, $timeout, $ionicPopup, uiGmapGoogleMapApi, LocalStorageSingletonServices, Passenger, passenger, Position, Jitney, jitneys){
 	/*
 	=========================================
 		SCOPE DEFINITION
 	=========================================
 	*/
-	/* GET GEOLOCATION AND LAT AND LON TO SCOPE  */
+			angular.forEach(passenger, function(value, index) {
+				if (value.id !== undefined) {
+					$scope.passenger = value;
+				};
+			});
+
+			$scope.jitneys = jitneys;
 			$scope.map = {
 				center: {
 					latitude: -33.436751,
@@ -20,12 +26,27 @@
 				},
 				zoom: 15
 			};
-			$scope.passengers = [];
+			
+			setInterval(function() {
+				// GET ALL JITNEYS
+				// TO-DO FILTER JITNEYS AROUND 3 KM.
+				Jitney.getJitneys().then(function(jitneys) {
+					angular.forEach(jitneys, function(value, index) {
+						if (value.positions !== null) {
+							$scope.jitneys[index] = {
+						  	id: index,
+						  	latitude: value.positions.latitude,
+						  	longitude: value.positions.longitude,
+						  	icon: '../../../img/jitney-icon-24.png'
+					  	};	
+						};
+					  
+					});
+				});
+			}, 5000);
 
-			// TO-DO ADD LOADING FOR GET GEOLOCATION
-			// TO-DO ADD MARKERS OF THE USERS MODEL
+			/* GET GEOLOCATION LAT AND LON TO SCOPE  */
 			$geolocation.getCurrentPosition().then(function(position) {
-				// TO-DO REMOVE LOADING
 				$scope.map = {
 					center: {
 						latitude: position.coords.latitude,
@@ -36,36 +57,39 @@
 					disableDoubleClickZoom: true
 				};
 
-				$scope.passengers.push({
-					id: 0,
-					latitude: position.coords.latitude,
-					longitude: position.coords.longitude,
-					icon: '../../../img/passenger-icon-24.png'
-				});
-
-				$log.info($scope.passengers[0]);
-				var lat = -33.4136139, lon = -70.5828831;
-				setInterval(function() {
-					// $log.info('from', $scope.passengers[1]);
-					$scope.$apply(function () {
-						lon -= 0.0000010;
-						$scope.passengers[1] = {
-							id: 1,
-							latitude: lat.toFixed(7),
-							longitude: lon.toFixed(7),
-							icon: '../../../img/jitney-icon-24.png'
+				Passenger.getPassenger(2).then(function(passenger) {
+					angular.forEach(passenger, function(value, index) {
+						if (value.id !== undefined) {
+							$scope.passenger = value;
 						};
-						// $log.info('to', $scope.passengers[1]);
-        	});
-				}, 10);
+					});
+					
+				  // VALIDATES MAP TYPE
+				  $scope.checkMapType($scope.passenger.automatic_map);
+
+					setInterval(function() {
+						var passengerPosition = {
+							userId: $scope.passenger.user_id,
+							latitude: position.coords.latitude.toFixed(7),
+							longitude: position.coords.longitude.toFixed(7),
+							perimeter: 0
+						};
+
+						// IT'S CREATE A NEW PASSENGER POSITION.
+						Position.create(passengerPosition).then(function(position) { });
+
+						$log.info($scope.passenger);
+						$scope.passenger.coords = {
+							latitude: passengerPosition.latitude,
+							longitude: passengerPosition.longitude
+						};
+						$scope.passenger.icon = '../../../img/passenger-icon-24.png';
+						// $scope.$apply();
+					}, 5000);
+
+				});
 			});
-			// $scope.events = {
-		  //   click: function (marker, eventName, dataModel) {
 
-		  //    }
-		  //  };
-
-		  // TO-DO SEND INFORMATION BY SOCKET TO UPDATE JITNEY MAP 
 		  $scope.searchJitnies = function() {
 		  	var confirm = $ionicPopup.confirm({
 		  		title: 'buscar colectivo',
@@ -88,27 +112,38 @@
 		  };
 
 		  $scope.goToConfigurations = function() {
-		  	$state.go('configuration');
+		  	$state.go('passengerConfiguration');
 		  };
 
-		  /* VALIDATION TO SEPUT MAP BY HOUR OF DAY */
-		  var date = new Date();
-		  if (date.getHours() >= 6 && date.getHours() <= 19) {
-		  	$scope.options = { 
-		  		'mapTypeControl': false,
-		  		'streetViewControl': false,
-		  		'draggable': false,
-		  		'styles': [{"featureType":"landscape.natural","elementType":"geometry.fill","stylers":[{"visibility":"on"},{"color":"#e0efef"}]},{"featureType":"poi","elementType":"geometry.fill","stylers":[{"visibility":"on"},{"hue":"#1900ff"},{"color":"#c0e8e8"}]},{"featureType":"road","elementType":"geometry","stylers":[{"lightness":100},{"visibility":"simplified"}]},{"featureType":"road","elementType":"labels","stylers":[{"visibility":"off"}]},{"featureType":"transit.line","elementType":"geometry","stylers":[{"visibility":"on"},{"lightness":700}]},{"featureType":"water","elementType":"all","stylers":[{"color":"#7dcdcd"}]}]
-		  	};
-		  }else{
-		  	$scope.options = { 
-		  		'mapTypeControl': false,
-		  		'streetViewControl': false,
-		  		'draggable': false,
-		  		'styles': [{"featureType":"all","elementType":"labels.text.fill","stylers":[{"color":"#ffffff"}]},{"featureType":"all","elementType":"labels.text.stroke","stylers":[{"color":"#000000"},{"lightness":13}]},{"featureType":"administrative","elementType":"geometry.fill","stylers":[{"color":"#000000"}]},{"featureType":"administrative","elementType":"geometry.stroke","stylers":[{"color":"#144b53"},{"lightness":14},{"weight":1.4}]},{"featureType":"landscape","elementType":"all","stylers":[{"color":"#08304b"}]},{"featureType":"poi","elementType":"geometry","stylers":[{"color":"#0c4152"},{"lightness":5}]},{"featureType":"road.highway","elementType":"geometry.fill","stylers":[{"color":"#000000"}]},{"featureType":"road.highway","elementType":"geometry.stroke","stylers":[{"color":"#0b434f"},{"lightness":25}]},{"featureType":"road.arterial","elementType":"geometry.fill","stylers":[{"color":"#000000"}]},{"featureType":"road.arterial","elementType":"geometry.stroke","stylers":[{"color":"#0b3d51"},{"lightness":16}]},{"featureType":"road.local","elementType":"geometry","stylers":[{"color":"#000000"}]},{"featureType":"transit","elementType":"all","stylers":[{"color":"#146474"}]},{"featureType":"water","elementType":"all","stylers":[{"color":"#021019"}]}]
-		  	};
-		  };
-
+		  $scope.checkMapType = function(mapType) {
+				var date = new Date();
+				if (mapType) {
+					if (date.getHours() > 6 && date.getHours() < 19) {
+						$scope.options = { 
+							'mapTypeControl': false,
+							'streetViewControl': false,
+							'draggable': false,
+							'styles': [{"featureType":"landscape.natural","elementType":"geometry.fill","stylers":[{"visibility":"on"},{"color":"#e0efef"}]},{"featureType":"poi","elementType":"geometry.fill","stylers":[{"visibility":"on"},{"hue":"#1900ff"},{"color":"#c0e8e8"}]},{"featureType":"road","elementType":"geometry","stylers":[{"lightness":100},{"visibility":"simplified"}]},{"featureType":"road","elementType":"labels","stylers":[{"visibility":"off"}]},{"featureType":"transit.line","elementType":"geometry","stylers":[{"visibility":"on"},{"lightness":700}]},{"featureType":"water","elementType":"all","stylers":[{"color":"#7dcdcd"}]}]
+						};
+					} else {
+						$scope.options = { 
+							'mapTypeControl': false,
+							'streetViewControl': false,
+							'draggable': false,
+							'styles': [{"featureType":"all","elementType":"labels.text.fill","stylers":[{"color":"#ffffff"}]},{"featureType":"all","elementType":"labels.text.stroke","stylers":[{"color":"#000000"},{"lightness":13}]},{"featureType":"administrative","elementType":"geometry.fill","stylers":[{"color":"#000000"}]},{"featureType":"administrative","elementType":"geometry.stroke","stylers":[{"color":"#144b53"},{"lightness":14},{"weight":1.4}]},{"featureType":"landscape","elementType":"all","stylers":[{"color":"#08304b"}]},{"featureType":"poi","elementType":"geometry","stylers":[{"color":"#0c4152"},{"lightness":5}]},{"featureType":"road.highway","elementType":"geometry.fill","stylers":[{"color":"#000000"}]},{"featureType":"road.highway","elementType":"geometry.stroke","stylers":[{"color":"#0b434f"},{"lightness":25}]},{"featureType":"road.arterial","elementType":"geometry.fill","stylers":[{"color":"#000000"}]},{"featureType":"road.arterial","elementType":"geometry.stroke","stylers":[{"color":"#0b3d51"},{"lightness":16}]},{"featureType":"road.local","elementType":"geometry","stylers":[{"color":"#000000"}]},{"featureType":"transit","elementType":"all","stylers":[{"color":"#146474"}]},{"featureType":"water","elementType":"all","stylers":[{"color":"#021019"}]}]
+						};
+					};
+				}else {
+					$scope.options = { 
+						'mapTypeControl': false,
+						'streetViewControl': false,
+						'draggable': false,
+						'styles': [{"featureType":"landscape.natural","elementType":"geometry.fill","stylers":[{"visibility":"on"},{"color":"#e0efef"}]},{"featureType":"poi","elementType":"geometry.fill","stylers":[{"visibility":"on"},{"hue":"#1900ff"},{"color":"#c0e8e8"}]},{"featureType":"road","elementType":"geometry","stylers":[{"lightness":100},{"visibility":"simplified"}]},{"featureType":"road","elementType":"labels","stylers":[{"visibility":"off"}]},{"featureType":"transit.line","elementType":"geometry","stylers":[{"visibility":"on"},{"lightness":700}]},{"featureType":"water","elementType":"all","stylers":[{"color":"#7dcdcd"}]}]
+					};
+				};
+			};
+			// VALIDATES MAP TYPE
+			$scope.checkMapType($scope.passenger.automatic_map);
 
 		}]);
 }).call(this);
