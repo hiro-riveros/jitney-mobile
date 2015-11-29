@@ -10,39 +10,44 @@
 * | @id               | int            |
 * | @firstName        | string         |
 * | @lastName         | string         |
-* | @email            | string         |
-* | @nickname         | string         |
+* | @age              | int            |
+
 *
 */
 
 (function() {
 	this.app.factory('User', function($http, $q, ENV, LocalStorageSingletonServices) {
-		return {
+		var currentUser;
 
+		if(LocalStorageSingletonServices.getCurrentUser() != undefined){
+			currentUser = LocalStorageSingletonServices.getCurrentUser();
+		};
+		
+		return {
+			isLoggedIn: function() {
+         return !_.isEmpty(currentUser);
+     	},
 			create: function(User) {
 				var defer = $q.defer();
 				$http({
-				  method: 'POST',
-				  url: ENV.API_URL + 'users',
-				  params:{
-			  		email: User.email,
-				  	password: User.password,
-				  	password_confirmation: User.passwordConfirmation
-				  }
+		    	url: ENV.API_URL + 'users',
+		    	method: 'POST',
+		    	params: { 
+							email: User.email, 
+							password: User.password, 
+							password_confirmation: User.passwordConfirmation
+					}
 				}).then(function(User) {
 					if (User.data !== undefined && User.data !== '') {
 							var currentUser = {
 								id: User.data.id,
+								userId: User.data.user_id,
 								email: User.data.email,
 						  	password: User.data.password,
-						  	passwordConfirmation: User.data.password_confirmation
+						  	actableType: User.data.actable_type
 							};
 							LocalStorageSingletonServices.setCurrentUser(currentUser);
 							defer.resolve(currentUser);
-					} else {
-						return {
-							error: 'lo sentimos no hemos podido crear tu cuenta'
-						};
 					};
 				}, function(reason) {
 					defer.reject(reason.data);
@@ -50,53 +55,64 @@
 				return defer.promise;
 			},
 			update: function(User) {
-				debugger;
+				var defer = $q.defer();
 				$http({
 				  method: 'PUT',
-				  url: ENV.API_URL + '/users/update',
+				  url: ENV.API_URL + 'users/' + User.userId,
 				  params:{
-				  	id: User.id,
+				  	id: User.userId,
 				  	name: User.name,
+				  	last_name: User.lastName,
 				  	email: User.email,
 				  	password: User.password,
 				  	password_confirmation: User.passwordConfirmation,
-				  	last_name: User.lastName,
-				  	slast_name: User.slastName,
-				  	account_type: User.accountType,
-				  	age: User.age
+				  	actable_type: LocalStorageSingletonServices.getCurrentUser().actableType
 				  }
-				}).then(function(response) {
-
-				  }, function(reason) {
-
+				}).then(function(User) {
+					if (User.data !== undefined && User.data !== '') {
+							var currentUser = {
+								id: User.data.specific_id,
+								userId: User.data.id,
+								email: User.data.email,
+								name: User.data.name,
+								lastName: User.data.last_name,
+						  	password: User.data.password,
+						  	passwordConfirmation: User.data.password_confirmation,
+						  	actableType: User.data.actable_type
+							};
+							LocalStorageSingletonServices.setCurrentUser(currentUser);
+							defer.resolve(currentUser);
+					};
+				 }, function(reason) {
+				  	defer.reject(reason.data);
 				});
+				return defer.promise;
 			},
 			login: function(User) {
-				debugger;
 				var defer = $q.defer();
 				$http({
 				  method: 'POST',
-				  url: 'http://localhost:3000/users/sign_in',
-				  params:{
+				  url: ENV.API_URL + 'sessions/sign_in',
+				  data: {
 				  	email: User.email,
 				  	password: User.password
 				  }
 				}).then(function(User) {
 					debugger;
-					if (User.data !== undefined && User.data !== '') {
-							var currentUser = {
-						  	id: User.data.id,
-						  	name: User.data.name,
-						  	email: User.data.email,
-						  	password: User.data.password,
-						  	passwordConfirmation: User.data.password_confirmation,
-						  	lastName: User.data.last_name,
-						  	slastName: User.data.slast_name,
-						  	accountType: User.data.account_type,
-						  	age: User.age
-							};
-							LocalStorageSingletonServices.setCurrentUser(currentUser);
-							defer.resolve(currentUser);
+					if (User.data !== undefined && User.data !== '' && User.data.id !== undefined) {
+						var currentUser = {
+						 	id: User.data.id,
+						 	name: User.data.name,
+						 	email: User.data.email,
+						 	password: User.data.password,
+						 	passwordConfirmation: User.data.password_confirmation,
+						 	lastName: User.data.last_name,
+						 	slastName: User.data.slast_name,
+						 	accountType: User.data.account_type,
+						 	age: User.age
+						};
+						LocalStorageSingletonServices.setCurrentUser(currentUser);
+						defer.resolve(currentUser);
 					} else {
 						return {
 							error: 'lo sentimos no hemos podido crear tu cuenta'

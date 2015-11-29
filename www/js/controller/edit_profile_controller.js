@@ -6,13 +6,12 @@
 
 (function() {
 	this.app.controller('EditProfileController', ['$scope', '$ionicPopup', '$state', 'User', 'user',
-		function($scope, $ionicPopup, $state, User, user){
+		function($scope, $ionicPopup, $state, User, user) {
 	/*
 	=========================================
 		SCOPE DEFINITION
 	=========================================
 	*/
-
 	$scope.user = user;
 	// TO-DO SEND NEW USER DATA.
 
@@ -23,17 +22,15 @@
 		});
 		confirm.then(function(result) {
 			if (result) {
-				var updatePromise = User.update($scope.user);
-				updatePromise.then(function(user) {
-					debugger;
+				User.update($scope.user).then(function(user) {
 					if (user !== undefined) {
-						$scope.callAlert('error', 'cambios actualizados!');
+						$scope.user = user;
+						$scope.callAlert('excelente', 'cambios actualizados!');
 					} else {
 						$scope.callAlert('error', 'los cambios no han sido actualizados, favor intentar mas tarde.');
 					};
 				}, function(reason) {
-					debugger;
-					$scope.callAlert('error', 'los cambios no han sido actualizados, favor intentar mas tarde. \n' + JSON.stringifyr(reason));
+					$scope.callAlert('error', 'los cambios no han sido actualizados, favor intentar mas tarde. \n' + JSON.stringify(reason));
 				});
 
 			} else {
@@ -49,7 +46,11 @@
 		});
 
 		alert.then(function() {
-			$state.go('configuration');
+			if ($scope.user.actableType === 'Passenger') {
+				$state.go('mapPassenger');
+			} else {
+				$state.go('mapJitney'); 
+			};
 		});
 	}
 

@@ -10,6 +10,9 @@
 			setCurrentUser: function (data) {
 				$localStorage.currentUser = data;
 			},
+			deleteCurrentUser: function() {
+				delete $localStorage.currentUser;
+			},
 			getPassenger: function () {
 				return passenger = $localStorage.passenger;
 			},

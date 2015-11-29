@@ -13,7 +13,7 @@
 	=========================================
 	*/
 			$scope.user = {};
-
+			LocalStorageSingletonServices.deleteCurrentUser();
 			$scope.signUp = function() {
 				if ($scope.user.email === undefined || $scope.user.email === '') {
 					document.getElementById('email').classList.add('input-error');
@@ -42,21 +42,26 @@
 			};
 
 			$scope.login = function () {
-				LocalStorageSingletonServices.setCurrentUser({ email: 'hirosmans@gmail.com', password: '12121212'});
-				alert(JSON.stringify(LocalStorageSingletonServices.getCurrentUser()));
+				// REMOVE FIRST IF 
 				if (LocalStorageSingletonServices.getCurrentUser() !== undefined) {
 					$state.go('mapPassenger');
+				}else {
+					if ($scope.user.email === undefined || $scope.user.email === '') {
+						alert('debes ingresar un email');
+					}else if ($scope.user.password === undefined || $scope.user.password === '') {
+						alert('debes ingresar un password');
+					}	else {
+						User.login($scope.user).then(function(user) {
+							debugger;
+							if (user !== undefined) {
+								$state.go('mapPassenger');	
+							};					
+						}, function(reason) {
+							debugger;
+							alert('error');
+						});
+					};
 				};
-				// User.login($scope.user).then(function(user) {
-				// 	debugger;
-				// 	if (user !== undefined) {
-				// 		$localStorage.user = user;
-				// 		$state.go('mapPassenger');	
-				// 	};					
-				// }, function(reason) {
-				// 	debugger;
-				// 	alert('error');
-				// });
 			};
 
 			$scope.activeteSignup = function() {
