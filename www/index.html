@@ -19,12 +19,13 @@
     <script src="lib/jquery/dist/jquery.js"></script>
     <script src="lib/Materialize/dist/js/materialize.js"></script>
     <script src="lib/angular-simple-logger/dist/angular-simple-logger.js"></script>
-    <script src="//maps.googleapis.com/maps/api/js"></script>
+    <script src="//maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true&libraries=geometry" async defer></script>
     <script src="lib/maps.google.com/map.js"></script>
     <script src="lib/angular-google-maps/dist/angular-google-maps.js"></script>
     <script src="lib/ngGeolocation/ngGeolocation.js"></script>
     <script src="lib/angular-restmod/dist/angular-restmod-bundle.js"></script>
     <script src="lib/ngstorage/ngStorage.js"></script>
+    <script src="lib/underscore/underscore.js"></script>
 
     <!-- cordova script (this will be a 404 during development) -->
     <script src="cordova.js"></script>
@@ -39,13 +40,17 @@
     <script src="js/controller/sign_up_controller.js"></script>
     <script src="js/controller/map_jitney_controller.js"></script>
     <script src="js/controller/map_passenger_controller.js"></script>
-    <script src="js/controller/configuration_controller.js"></script>
+    <script src="js/controller/passenger_configuration_controller.js"></script>
+    <script src="js/controller/jitney_configuration_controller.js"></script>
     <script src="js/controller/edit_profile_controller.js"></script>
     <script src="js/models/user.js"></script>
     <script src="js/models/passenger.js"></script>
     <script src="js/models/jitney.js"></script>
+    <script src="js/models/position.js"></script>
+    <script src="js/models/car.js"></script>
     <script src="js/models/configuration.js"></script>
     <script src="js/services/local_storage_service.js"></script>
+    <script src="js/services/http_header_interceptor.js"></script>
     
   </head>
   <body ng-app="jitney">

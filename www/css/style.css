@@ -146,8 +146,13 @@
 	height: 640px;
 }
 .gm-style-mtc,
-.gmnoprint {
-  display: none;
+.gmnoprint,
+.profile-photo-light {
+  display: none !important;
+}
+
+.div.profile-photo img{
+	display: none !important;	
 }
 
 .ui-buttons,
