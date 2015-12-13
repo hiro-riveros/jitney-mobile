@@ -17,7 +17,7 @@
 */
 
 (function() {
-	this.app.factory('Car', function($http, $q, ENV) {
+	this.app.factory('Car', ['$http', '$q', 'ENV', function($http, $q, ENV) {
 		return {
 			getCar: function(carId) {
 				var defer = $q.defer();
@@ -68,5 +68,5 @@
 				return defer.promise;
 			}
 		}
-  });
+  }]);
 }).call(this);

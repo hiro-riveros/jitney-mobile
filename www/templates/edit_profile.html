@@ -9,7 +9,8 @@
                      class="validate"
                      ng-model="user.name"
                      placeholder=""
-                     id="firt_name">
+                     id="firt_name"
+                     required="required">
                      <label for="firt_name" class="active">nombre</label>
             </div>
             <div class="input-field col s6">
@@ -17,7 +18,8 @@
                      class="validate"
                      ng-model="user.lastName"
                      placeholder=""
-                     id="last_name">
+                     id="last_name"
+                     required="required">
                      <label for="last_name" class="active">apellido</label>
             </div>
           </div>
@@ -27,27 +29,20 @@
                      class="validate" 
                      ng-model="user.email"
                      placeholder=""
-                     id="email">
+                     id="email"
+                     required="required">
                      <label for="email" class="active">email</label>
             </div>
           </div>
-          <div class="row">
-            <div class="input-field col s12">
-              <input type="email"
-                     class="validate" 
-                     ng-model="user.nickName"
-                     placeholder=""
-                     id="nickname">
-                     <label for="nickname" class="active">nickname</label>
-            </div>
-          </div>
+          <br>
           <div class="row">
             <div class="input-field col s12">
               <input type="password"
                      class="validate"
                      ng-model="user.password"
                      placeholder=""
-                     id="password">
+                     id="password"
+                     required="required">
                      <label for="password" class="active">password</label>
             </div>
           </div>
@@ -57,10 +52,12 @@
                      class="validate"
                      ng-model="user.passwordConfirmation"
                      placeholder=""
-                     id="confirmation_password">
+                     id="confirmation_password"
+                     required="required">
                      <label for="confirmation_password" class="active">confirmar password</label>
             </div>
           </div>
+          <br><br>
           <button class="btn waves-effect waves-light btn-signup" 
                   type="submit"
                   name="action"

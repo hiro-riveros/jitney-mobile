@@ -2,8 +2,8 @@
   <ion-content scroll-y="false">
     <section class="login-content" id="login-content">
       <div class="pattern"></div>
-    	<div class="row form-content">
-    		<div class="col s12">
+      <div class="row form-content">
+        <div class="col s12">
         <div class="row">
           <div class="input-field col s12">
             <input type="text" 
@@ -12,7 +12,7 @@
             <label for="email">Email</label>
           </div>
         </div>
-    		<div class="row">
+        <div class="row">
           <div class="input-field col s12">
             <input type="password" 
                    class="validate" 
@@ -20,26 +20,20 @@
             <label for="password">Password</label>
           </div>
         </div>
-    		  <button class="btn waves-effect waves-light btn-login" 
+          <button class="btn waves-effect waves-light btn-login" 
                   type="button" 
                   name="action" 
                   ng-click="login()">
                   Login
           </button>
-    		  <br /><br />
-    			<button class="btn waves-effect waves-light btn-login-facebook" 
-                  type="button" 
-                  name="facebook" 
-                  ng-click="login('mapPassenger')"> 
-                  login with facebook
-    			</button>
           <br /><br />
+
           <a class="waves-effect waves-teal btn-flat btn-redirect-signup text-center" 
              ng-click="activeteSignup()">
              no tienes una cuenta?
           </a>
-    		</div>
-    	</div>
+        </div>
+      </div>
     </section>
 
     <section class="signup-content hidden" id="signup-content">

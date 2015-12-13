@@ -5,50 +5,39 @@
 */
 
 (function() {
-	this.app.controller('MapJitneyController', ['$scope', '$geolocation', '$log', '$http', '$state', '$timeout', '$ionicPopup', 'Jitney', 'Position', 'Car', 'LocalStorageSingletonServices', 'Passenger', 'passengers','jitney', 'uiGmapGoogleMapApi',
-		function($scope, $geolocation, $log, $http, $state, $timeout, $ionicPopup, Jitney, Position, Car, LocalStorageSingletonServices, Passenger, passengers, jitney, uiGmapGoogleMapApi){
+	this.app.controller('MapJitneyController', ['$scope', '$cordovaGeolocation', '$log', '$http', '$state', '$timeout', '$ionicPopup', 'Jitney', 'Position', 'Car', 'LocalStorageSingletonServices', 'Passenger', 'passengers','jitney', 'uiGmapGoogleMapApi', 'DistanceCalculatorService',
+		function($scope, $cordovaGeolocation, $log, $http, $state, $timeout, $ionicPopup, Jitney, Position, Car, LocalStorageSingletonServices, Passenger, passengers, jitney, uiGmapGoogleMapApi, DistanceCalculatorService){
 	/*
 	=========================================
 		SCOPE DEFINITION
 	=========================================
 	*/	
-
-			/*
-			=============================
-			TO-DO IMPLEMENTS FUCKED LOGIN
-			=============================
-			*/
-			// LocalStorageSingletonServices.setCurrentUser({ user_id: 1 });
-
 			var buttonAddPassenger = document.getElementById('btn-add-passenger');
 			var buttonRemovePassenger = document.getElementById('btn-remove-passenger');
 			buttonAddPassenger.setAttribute('disabled', 'disabled');
 			buttonRemovePassenger.setAttribute('disabled', 'disabled');
 
 			$scope.passengers = passengers;
-
-			// DEFINE CIRCLE
-			$scope.circleCoords = {};
-			angular.forEach(jitney, function(value, index) {
-				if (value.id !== undefined) {
-					$scope.jitney = value;
-				};
-			});
+			$scope.refreshMap = true;
 
 			$scope.car = {
 				jitney_id: 0,
 				passengers: []
 			};
+			
 			$scope.map = {
 				center: {
 					latitude: -33.436751,
 					longitude: -70.6452024
 				},
-				zoom: 15,
-				control: {},
-				markerscontrol:{}
+				zoom: 10,
 			};
-
+			angular.forEach(jitney, function(value, index) {
+				if (value.id !== undefined) {
+					$scope.jitney = value;
+				};
+			});
+			$scope.jitney.icon = '../../../img/jitney-icon-24.png';
 			// GET ALL PASSENGERS
 			// TO-DO FILTER PASSENGER AROUND 3 KM.
 			setInterval(function() {
@@ -56,24 +45,32 @@
 					angular.forEach(passengers, function(value, index) {
 						if (value.positions !== null) {
 							$scope.passengers[index] = {
-						  	id: index,
-						  	latitude: value.positions.latitude,
-						  	longitude: value.positions.longitude,
-						  	icon: '../../../img/passenger-icon-24.png'
-					  	}	;
+								id: index,
+								latitude: value.positions.latitude,
+								longitude: value.positions.longitude,
+								icon: '../../../img/passenger-icon-24.png'
+							};
+
 						};
 					});
 				});
+				document.querySelector('.angular-google-map-container').children[0].children[5].style.display = 'none';
 			}, 5000);
 
 			/* GET GEOLOCATION AND LAT AND LON TO SCOPE  */
-			$geolocation.getCurrentPosition().then(function(position) {
-				// WATCH OUT!!
-				$scope.circleCoords = {
-					lat: parseFloat(position.coords.latitude.toFixed(3)), // google need this name to variable
-					lng: parseFloat(position.coords.longitude.toFixed(3)) // google need this name to variable
-				};
+			var posOptions = {timeout: 10000, enableHighAccuracy: false};
 
+			setInterval(function() {
+				$cordovaGeolocation.getCurrentPosition(posOptions).then(function(position) {
+		      $scope.jitney.coords = {
+						latitude: position.coords.latitude,
+						longitude: position.coords.longitude
+					};
+					$scope.jitney.icon = '../../../img/jitney-icon-24.png';
+				});
+		  }, 3000);
+			
+			$cordovaGeolocation.getCurrentPosition(posOptions).then(function(position) {
 				$scope.map = {
 					center: {
 						latitude: position.coords.latitude,
@@ -84,14 +81,13 @@
 					disableDoubleClickZoom: true
 				};
 				// GET CURRENT JITNEY AND ALL PASSENGERS
-				Jitney.getJitney(1).then(function(jitney) {
+				Jitney.getJitney($scope.jitney.id).then(function(jitney) {
 					angular.forEach(jitney, function(value, index) {
 						if (value.id !== undefined) {
 							$scope.jitney = value;
 						};
 					});
 
-					$scope.markersControl = {};
 					// VALIDATES MAP TYPE
 					$scope.checkMapType($scope.jitney.automatic_map);
 
@@ -102,13 +98,15 @@
 							longitude: position.coords.longitude.toFixed(7),
 							perimeter: 0
 						};
+
 						// IT'S CREATE A NEW JITNEY POSITION.
 						Position.create(jitneyPosition).then(function(position) { });
 						$scope.jitney.coords = {
-							latitude: jitneyPosition.latitude,
-							longitude: jitneyPosition.longitude
+							latitude: position.coords.latitude,
+							longitude: position.coords.longitude
 						};
 						$scope.jitney.icon = '../../../img/jitney-icon-24.png';
+
 					}, 5000);
 
 					Car.getCar($scope.jitney.cars[0].id).then(function(car) {
@@ -126,7 +124,7 @@
 					});
 				});
 			});
-			
+		  
 			$scope.addPassenger = function(){
 				if ($scope.car.passengers === 4) {
 					buttonAddPassenger.setAttribute('disabled', 'disabled');
@@ -178,32 +176,59 @@
 				});
 			};
 
-			// SEARCH PASSENGERS METHOD. FIND NEARBY PASSENGER AND GIVE FOCUS 
+			// SEARCH PASSENGERS METHOD. FIND NEARBY PASSENGER AND GIVE FOCUS
 			// TO-DO ADD FX FOR ACTIVATE SEARCH.
-			// TO-DO ADD RESTMOD METHOD TO FIND ALL FIND NEARBY PASSENGER AND ASSIGN TO MARKERS
 			// TO-DO ADD JITNEY TO MAP OF PASSENGERS.
+			$scope.events = {
+		    click: function (marker, eventName, args) {
+		    	debugger;
+		    }
+		  };
+
+		  $scope.callAlert = function(type, message) {
+			  var alert = $ionicPopup.alert({
+					title: type,
+					template: message
+				});
+
+				alert.then(function() {
+					
+				});
+		  };
 			$scope.searchPassengers = function() {
 				uiGmapGoogleMapApi.then(function(maps) {
-					debugger;
-					 var marker = $scope.markersControl.getGMarkers();
-					// var circle = maps.Circle({
-					// 	center: {
-					// 		lat: $scope.circleCoords.lat, // google need this name to variable
-					// 		lng: $scope.circleCoords.lng // google need this name to variable
-					// 	},
-					// 	radius: 300000,
-					// 	strokeColor: '#08B21F',
-					// 	strokeWeight: 2,
-					// 	strokeOpacity: 1,
-					// 	fillColor: '#08B21F',
-					// 	fillOpacity: 0.5,
-					// 	map: maps,
-					// 	// geodesic: true, // optional: defaults to false
-					// 	visible: true // optional: defaults to true
-					// });
-					debugger;
-					maps.geometry.poly.isLocationOnEdge(marker[0].position)
-					// maps.geometry.poly.containsLocation($scope.circleCoords, circle);
+					var count = $scope.passengers.length;
+					$log.info('passengers quantity ', count);
+
+					angular.forEach($scope.passengers, function(value, index) {
+						var jitneyObject = {
+							lat: $scope.jitney.coords.latitude,
+							lng: $scope.jitney.coords.longitude
+						};
+						var passengerObject = {
+							lat: 0,
+							lng: 0
+						};
+						passengerObject.lat = value.latitude;
+						passengerObject.lng = value.longitude;
+						//  IT CENTER MAP ON PASSENGER POSITION, PASSENGER POSITION SHOULD BE BETWEEN 1000 AND 300 KM  
+						if (DistanceCalculatorService.getDistance(jitneyObject, passengerObject) >= 0 && 
+							  DistanceCalculatorService.getDistance(jitneyObject, passengerObject) <= 3000) {
+							$scope.map = {
+								center: {
+									latitude: passengerObject.lat,
+									longitude: passengerObject.lng
+								},
+								zoom: 15
+							};
+							$scope.callAlert('Alerta', 'Se ha encontrado un pasajero a: ' + DistanceCalculatorService.getDistance(jitneyObject, passengerObject) + ' metros');
+						} else {
+							if (count === (index + 1)) {
+								$scope.callAlert('Busqueda finalizada', 'La busqueda a finalizado, actualmente no hay pasajeros cercanos a 3 km.');
+							};
+						};
+					});
+					return $scope.callAlert('Busqueda finalizada', 'La busqueda a finalizado, actualmente hay ' + $scope.passengers.length + ' activos');
 				});
 			};
 
@@ -241,10 +266,6 @@
 			
 			// VALIDATES MAP TYPE
 			$scope.checkMapType($scope.jitney.automatic_map);
-			$scope.getMarkerPosition = function(marker) {
-				// debugger;
-				return marker;
-			};
 
 		}]);
 

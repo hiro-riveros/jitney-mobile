@@ -1,0 +1,41 @@
+{
+  "name": "angular-restmod",
+  "version": "1.1.9",
+  "authors": [
+    "Ignacio Baixas <ignacio@platan.us>"
+  ],
+  "description": "API Bound Models for AngularJS",
+  "license": "MIT",
+  "homepage": "https://github.com/angular-platanus/restmod",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/angular-platanus/restmod.git"
+  },
+  "main": "./dist/angular-restmod-bundle.min.js",
+  "ignore": [
+    "**/.*",
+    "Gruntfile.js",
+    "karma.conf.js",
+    "package.json",
+    "test",
+    "src",
+    ".travis.yml"
+  ],
+  "dependencies": {
+    "angular": "~1",
+    "angular-inflector": "~0.2.0"
+  },
+  "devDependencies": {
+    "angular": "*",
+    "angular-mocks": "*"
+  },
+  "_release": "1.1.9",
+  "_resolution": {
+    "type": "version",
+    "tag": "v1.1.9",
+    "commit": "cc0e788ef829b4b7a7990f9053629a995ad7f5d9"
+  },
+  "_source": "git://github.com/platanus/angular-restmod.git",
+  "_target": "~1.1.9",
+  "_originalSource": "angular-restmod"
+}

@@ -1,8 +1,10 @@
 <!DOCTYPE html>
-<html>
+<html ng-app="jitney">
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+    <!-- <meta http-equiv="Content-Security-Policy" content="default-src 'self' *; style-src 'self' 'unsafe-inline' *; script-src 'self' 'unsafe-inline' 'unsafe-eval' *"> -->
+
     <title></title>
 
     <link href="lib/ionic/css/ionic.css" rel="stylesheet">
@@ -15,12 +17,15 @@
 
     <!-- ionic/angularjs js -->
     <script src="lib/lodash/lodash.js"></script>
+
     <script src="lib/ionic/js/ionic.bundle.js"></script>
+    
     <script src="lib/jquery/dist/jquery.js"></script>
     <script src="lib/Materialize/dist/js/materialize.js"></script>
     <script src="lib/angular-simple-logger/dist/angular-simple-logger.js"></script>
-    <script src="//maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true&libraries=geometry" async defer></script>
-    <script src="lib/maps.google.com/map.js"></script>
+    <!-- <script src="//maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true&libraries=geometry" async defer></script>-->
+    <script src="//maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true&libraries=geometry"></script>
+    <!--<script src="lib/maps.google.com/map.js"></script>-->
     <script src="lib/angular-google-maps/dist/angular-google-maps.js"></script>
     <script src="lib/ngGeolocation/ngGeolocation.js"></script>
     <script src="lib/angular-restmod/dist/angular-restmod-bundle.js"></script>
@@ -28,14 +33,15 @@
     <script src="lib/underscore/underscore.js"></script>
 
     <!-- cordova script (this will be a 404 during development) -->
+    <script src="lib/ngCordova/dist/ng-cordova.js"></script>
     <script src="cordova.js"></script>
 
     <!-- your app's js -->
     <script src="js/app.js"></script>
     <script src="js/config/platform_config.js"></script>
-    <script src="js/config/router_config.js"></script>
-    <script src="js/config/rootless-ams.js"></script>
     <script src="js/config/statics.js"></script>
+    <script src="js/config/router_config.js"></script>
+
     <script src="js/controller/login_controller.js"></script>
     <script src="js/controller/sign_up_controller.js"></script>
     <script src="js/controller/map_jitney_controller.js"></script>
@@ -50,10 +56,12 @@
     <script src="js/models/car.js"></script>
     <script src="js/models/configuration.js"></script>
     <script src="js/services/local_storage_service.js"></script>
+    <script src="js/services/distance_calculator_service.js"></script>
     <script src="js/services/http_header_interceptor.js"></script>
+    <script src="js/services/email_validation_services.js"></script>
     
   </head>
-  <body ng-app="jitney">
+  <body>
     <ion-nav-view>
       <ion-view></ion-view>
     </ion-nav-view>

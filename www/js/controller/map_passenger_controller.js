@@ -5,48 +5,66 @@
 */
 
 (function() {
-	this.app.controller('MapController', ['$scope', '$geolocation', '$log', '$http', '$state', '$timeout', '$ionicPopup', 'uiGmapGoogleMapApi', 'LocalStorageSingletonServices', 'Passenger', 'passenger', 'Position', 'Jitney', 'jitneys',
-		function($scope, $geolocation, $log, $http, $state, $timeout, $ionicPopup, uiGmapGoogleMapApi, LocalStorageSingletonServices, Passenger, passenger, Position, Jitney, jitneys){
+	this.app.controller('MapController', ['$scope', '$cordovaGeolocation', '$log', '$http', '$state', '$timeout', '$ionicPopup', 'uiGmapGoogleMapApi', 'LocalStorageSingletonServices', 'Passenger', 'passenger', 'Position', 'Jitney', 'jitneys', 'DistanceCalculatorService',
+		function($scope, $cordovaGeolocation, $log, $http, $state, $timeout, $ionicPopup, uiGmapGoogleMapApi, LocalStorageSingletonServices, Passenger, passenger, Position, Jitney, jitneys, DistanceCalculatorService){
 	/*
 	=========================================
 		SCOPE DEFINITION
 	=========================================
-	*/
-			angular.forEach(passenger, function(value, index) {
-				if (value.id !== undefined) {
-					$scope.passenger = value;
-				};
-			});
+	*/	
 
+			$scope.refreshMap = true;
 			$scope.jitneys = jitneys;
 			$scope.map = {
 				center: {
 					latitude: -33.436751,
 					longitude: -70.6452024
 				},
-				zoom: 15
+				zoom: 10
 			};
+			
+			angular.forEach(passenger, function(value, index) {
+				if (value.id !== undefined) {
+					$scope.passenger = value;
+				};
+			});
 			
 			setInterval(function() {
 				// GET ALL JITNEYS
-				// TO-DO FILTER JITNEYS AROUND 3 KM.
 				Jitney.getJitneys().then(function(jitneys) {
 					angular.forEach(jitneys, function(value, index) {
 						if (value.positions !== null) {
-							$scope.jitneys[index] = {
-						  	id: index,
-						  	latitude: value.positions.latitude,
-						  	longitude: value.positions.longitude,
-						  	icon: '../../../img/jitney-icon-24.png'
-					  	};	
+							if (value.users.is_active) {
+								$log.info('jitney true');
+								$scope.jitneys[index] = {
+							  	id: index,
+							  	latitude: value.positions.latitude,
+							  	longitude: value.positions.longitude,
+							  	icon: '../../../img/jitney-icon-24.png'
+						  	};
+					  	};
 						};
 					  
 					});
 				});
+				document.querySelector('.angular-google-map-container').children[0].children[5].style.display = 'none';
 			}, 5000);
 
-			/* GET GEOLOCATION LAT AND LON TO SCOPE  */
-			$geolocation.getCurrentPosition().then(function(position) {
+			/* GET GEOLOCATION AND LAT AND LON TO SCOPE  */
+			var posOptions = {timeout: 10000, enableHighAccuracy: false};
+
+			setInterval(function() {
+				$log.info('get position');
+				$cordovaGeolocation.getCurrentPosition(posOptions).then(function(position) {
+		      $scope.passenger.coords = {
+						latitude: position.coords.latitude,
+						longitude: position.coords.longitude
+					};
+					$scope.passenger.icon = '../../../img/passenger-icon-24.png';
+				});
+		  }, 3000);
+
+			$cordovaGeolocation.getCurrentPosition(posOptions).then(function(position) {
 				$scope.map = {
 					center: {
 						latitude: position.coords.latitude,
@@ -57,7 +75,7 @@
 					disableDoubleClickZoom: true
 				};
 
-				Passenger.getPassenger(2).then(function(passenger) {
+				Passenger.getPassenger($scope.passenger.id).then(function(passenger) {
 					angular.forEach(passenger, function(value, index) {
 						if (value.id !== undefined) {
 							$scope.passenger = value;
@@ -80,35 +98,56 @@
 
 						$log.info($scope.passenger);
 						$scope.passenger.coords = {
-							latitude: passengerPosition.latitude,
-							longitude: passengerPosition.longitude
+							latitude: position.coords.latitude,
+							longitude: position.coords.longitude
 						};
 						$scope.passenger.icon = '../../../img/passenger-icon-24.png';
-						// $scope.$apply();
 					}, 5000);
 
 				});
 			});
+			$scope.callAlert = function(type, message) {
+			  var alert = $ionicPopup.alert({
+					title: type,
+					template: message
+				});
 
+				alert.then(function() {	});
+		  };
 		  $scope.searchJitnies = function() {
-		  	var confirm = $ionicPopup.confirm({
-		  		title: 'buscar colectivo',
-		  		template: '¿estas seguro de iniciar la busqueda?'
-		  	});
-		  	confirm.then(function(response) {
-		  		if (response) {
-		    		// TO-DO REMOVE ALERT AND SEND NOTIFICATION TO USER.
-		    		$ionicPopup.alert({
-		    			title: 'contacto realizado',
-		    			template: 'ahora los colectivos cercanos podran verte'
-		    		});
-		    	} else {
-		    		$ionicPopup.alert({
-		    			title: 'contacto rechazado',
-		    			template: 'se ha cancelado la busqueda.'
-		    		});
-		    	};
-		    });
+
+				uiGmapGoogleMapApi.then(function(maps) {
+					angular.forEach($scope.jitneys, function(value, index) {
+						var passengerObject = {
+							lat: $scope.passenger.coords.latitude,
+							lng: $scope.passenger.coords.longitude
+						};
+
+						var jitneyObject = {
+							lat: 0,
+							lng: 0
+						};
+						
+						jitneyObject.lat = value.latitude;
+						jitneyObject.lng = value.longitude;
+						//  IT CENTER MAP ON JITNEY POSITION, JITNEY POSITION SHOULD BE BETWEEN 1000 AND 300 KM
+						if (DistanceCalculatorService.getDistance(passengerObject, jitneyObject) >= 1000 && 
+								DistanceCalculatorService.getDistance(passengerObject, jitneyObject) <= 3000) {
+
+							$scope.map = {
+								center: {
+									latitude: jitneyObject.lat,
+									longitude: jitneyObject.lng
+								},
+								zoom: 15
+							};
+						} else {
+							$scope.callAlert('sin colectivos!', 'no se han encontrado colectivos cercanos');
+						};
+
+					});
+					
+				});
 		  };
 
 		  $scope.goToConfigurations = function() {
@@ -144,6 +183,7 @@
 			};
 			// VALIDATES MAP TYPE
 			$scope.checkMapType($scope.passenger.automatic_map);
+		  
 
 		}]);
 }).call(this);

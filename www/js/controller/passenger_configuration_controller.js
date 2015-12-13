@@ -5,8 +5,8 @@
 */
 
 (function() {
-	this.app.controller('PassengerConfigurationController', ['$scope', '$state', '$ionicPopup', 'Passenger', 'passenger',
-		function($scope, $state, $ionicPopup, Passenger, passenger) {
+	this.app.controller('PassengerConfigurationController', ['$scope', '$state', '$ionicPopup', 'Passenger', 'passenger', 'User',
+		function($scope, $state, $ionicPopup, Passenger, passenger, User) {
 	/*
 	=========================================
 		SCOPE DEFINITION
@@ -21,9 +21,10 @@
 			};
 		});
 
-		// TO-DO SEND CONFIGURATION TO SERVER
 		$scope.saveConfiguration = function() {
-			Passenger.update($scope.passenger).then(function(passenger) {	});
+			Passenger.update($scope.passenger).then(function(passenger) {	
+				console.info('update passenger' + passenger);
+			});
 		};
 
 		$scope.goTo = function(option) {
@@ -31,10 +32,13 @@
 				$state.go('editProfile', { passenger: $scope.passenger});
 			} else {
 				window.location.href = $state.href('mapPassenger');
-				// reload the page
 				window.location.reload();
 			};
 		};
 
+		$scope.logout = function() {
+			User.logout($scope.passenger.autentication_token);
+			$state.go('login');
+		};
 	}]);
 }).call(this);

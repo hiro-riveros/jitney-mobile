@@ -16,7 +16,7 @@
 */
 
 (function() {
-	this.app.factory('Passenger', function($http, $q, ENV) {
+	this.app.factory('Passenger', ['$http', '$q', 'ENV', function($http, $q, ENV) {
 		return {
 
 			getPassengers: function() {
@@ -38,7 +38,7 @@
 				return defer.promise;
 			},
 			getPassenger: function(id) {
-				return $http.get( ENV.API_URL + 'passengers/' + id);
+				return $http.get(ENV.API_URL + 'passengers/' + id);
 			},
 			updatePassengerPosition: function (Position) {
 				var defer = $q.defer();
@@ -102,7 +102,6 @@
 				});
 				return defer.promise;
 			}
-
 		}
-  });
+  }]);
 }).call(this);

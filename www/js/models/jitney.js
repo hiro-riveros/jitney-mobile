@@ -16,7 +16,7 @@
 */
 
 (function() {
-	this.app.factory('Jitney', function($http, $q, ENV) {
+	this.app.factory('Jitney', ['$http', '$q', 'ENV', function($http, $q, ENV) {
 		return {
 
 			getJitneys: function() {
@@ -38,7 +38,7 @@
 				return defer.promise;
 			},
 			getJitney: function(id) {
-				return $http.get( ENV.API_URL + 'jitneys/' + id);
+				return $http.get(ENV.API_URL + 'jitneys/' + id);
 			},
 			updateJitneyPosition: function (position) {
 				var defer = $q.defer();
@@ -104,5 +104,5 @@
 			}
 
 		}
-  });
+  }]);
 }).call(this);

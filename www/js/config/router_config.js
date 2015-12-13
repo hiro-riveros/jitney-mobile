@@ -48,8 +48,8 @@
 				passengers: ['Passenger', function(Passenger) {
 					return Passenger.getPassengers();
 				}],
-				jitney: ['Jitney', function(Jitney) {
-					return Jitney.getJitney(1);
+				jitney: ['Jitney', 'LocalStorageSingletonServices' , function(Jitney, LocalStorageSingletonServices) {
+					return Jitney.getJitney(LocalStorageSingletonServices.getCurrentUser().id);
 				}]
 			}
 		})
@@ -60,8 +60,8 @@
 			templateUrl: 'templates/map_passenger.html',
 			controller: 'MapController',
 			resolve: {
-				passenger: ['Passenger', function(Passenger) {
-					return Passenger.getPassenger(2);
+				passenger: ['Passenger', 'LocalStorageSingletonServices', function(Passenger, LocalStorageSingletonServices) {
+					return Passenger.getPassenger(LocalStorageSingletonServices.getCurrentUser().id);
 				}],
 				jitneys: ['Jitney', function(Jitney) {
 					return Jitney.getJitneys();
@@ -75,8 +75,8 @@
 			templateUrl: 'templates/passenger_configuration.html',
 			controller: 'PassengerConfigurationController',
 			resolve: {
-				passenger: ['Passenger', function(Passenger) {
-					return Passenger.getPassenger(2);
+				passenger: ['Passenger', 'LocalStorageSingletonServices', function(Passenger, LocalStorageSingletonServices) {
+					return Passenger.getPassenger(LocalStorageSingletonServices.getCurrentUser().id);
 				}]
 			}
 		})
@@ -87,8 +87,8 @@
 			templateUrl: 'templates/jitney_configuration.html',
 			controller: 'JitneyConfigurationController',
 			resolve: {
-				jitney: ['Jitney', function(Jitney) {
-					return Jitney.getJitney(1);
+				jitney: ['Jitney', 'LocalStorageSingletonServices', function(Jitney, LocalStorageSingletonServices) {
+					return Jitney.getJitney(LocalStorageSingletonServices.getCurrentUser().id);
 				}]
 			}
 		});

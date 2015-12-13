@@ -31,7 +31,7 @@
 			setPosition: function (data) {
 				$localstorage.position = data;
 			}
-
+			
 		};
 	}]);	 	
 }).call(this);

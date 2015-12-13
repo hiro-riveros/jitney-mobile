@@ -1,14 +1,14 @@
 <ion-view class="map-view-jitney">
 	<ion-content>
 		<section class="map-content">
-			<ui-gmap-google-map center="map.center" zoom="map.zoom" options="options" data-tap-disabled="true">
-			<!-- <ui-gmap-circle center="map.center"></ui-gmap-circle>    -->
+			<ui-gmap-google-map center="map.center" zoom="map.zoom" options="options" data-tap-disabled="true" refresh='refreshMap'>
 				<ui-gmap-marker
 								icon="jitney.icon"
 								idKey="jitney.id"
 				        coords="jitney.coords"
 				        control="markersControl">
 				</ui-gmap-marker>
+				
 			 	<ui-gmap-markers models="passengers" 
 			 									 coords="'self'" 
 			 									 icon="'icon'"

@@ -16,7 +16,7 @@
 */
 
 (function() {
-	this.app.factory('Position', function($http, $q, ENV) {
+	this.app.factory('Position', ['$http', '$q', 'ENV', function($http, $q, ENV) {
     return {
     	getPosition: function (userId) {
 				var defer = $q.defer();
@@ -96,5 +96,5 @@
 				return defer.promise;
     	}
     };
-  });
+  }]);
 }).call(this);

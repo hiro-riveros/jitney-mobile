@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<!-- saved from url=(0031)http://localhost:8100/#/welcome -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><link type="text/css" rel="stylesheet" href="./localhost_files/css"><style type="text/css">.gm-style .gm-style-cc span,.gm-style .gm-style-cc a,.gm-style .gm-style-mtc div{font-size:10px}</style><style type="text/css">@media print {  .gm-style .gmnoprint, .gmnoprint {    display:none  }}@media screen {  .gm-style .gmnoscreen, .gmnoscreen {    display:none  }}</style><style type="text/css">.gm-style{font-family:Roboto,Arial,sans-serif;font-size:11px;font-weight:400;text-decoration:none}.gm-style img{max-width:none}</style><style type="text/css">@charset "UTF-8";[ng\:cloak],[ng-cloak],[data-ng-cloak],[x-ng-cloak],.ng-cloak,.x-ng-cloak,.ng-hide:not(.ng-hide-animate){display:none !important;}ng\:form{display:block;}.ng-animate-shim{visibility:hidden;}.ng-anchor{position:absolute;}</style>
+  <meta charset="utf-8">
+    <script>
+      // Injected Ionic Go To URL Live Reload Plugin
+      window.LiveReloadPlugin_IonicGoToUrl = (function() {
+        var GOTO_KEY = "__ionic_goto_url__";
+        var HISTORY_GO_KEY = "__ionic_history_go__";
+        var GoToUrlPlugin = function(window, host) {
+          this.window = window;
+          this.host = host;
+        }
+        GoToUrlPlugin.identifier = "__ionic_goto_url__";
+        GoToUrlPlugin.version = "1.0";
+        GoToUrlPlugin.prototype.reload = function(path) {
+          try {
+            if(path) {
+              if(path.indexOf(GOTO_KEY) === 0) {
+                this.window.document.location = path.replace(GOTO_KEY, "");
+                return true;
+              }
+              if(path.indexOf(HISTORY_GO_KEY) === 0) {
+                this.window.document.history.go( parseInt(path.replace(HISTORY_GO_KEY, ""), 10));
+                return true;
+              }
+            }
+          } catch(e) {
+            console.log(e);
+          }
+          return false;
+        };
+        return GoToUrlPlugin;
+      })();
+    </script>
+  <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+  <title></title>
+
+  <link href="./localhost_files/ionic.css" rel="stylesheet">
+  <link href="./localhost_files/materialize.css" rel="stylesheet">
+  <link href="./localhost_files/style.css" rel="stylesheet">
+
+  <!-- IF using Sass (run gulp sass first), then uncomment below and remove the CSS includes above
+  <link href="css/ionic.app.css" rel="stylesheet">
+-->
+<script src="./localhost_files/jquery.js"></script>
+<script type="text/javascript" src="./localhost_files/maps.google.com.js"></script>
+<!-- ionic/angularjs js -->
+<script src="./localhost_files/ionic.bundle.js"></script>
+
+<!-- cordova script (this will be a 404 during development) -->
+<script src="./localhost_files/ng-cordova.js"></script>
+<script src="./localhost_files/cordova.js"></script>
+
+
+<script src="./localhost_files/app.js"></script>
+<script src="./localhost_files/platform.js"></script>
+<script src="./localhost_files/router.js"></script>
+<script src="./localhost_files/welcome_controller.js"></script>
+<script src="./localhost_files/form_controller.js"></script>
+
+
+<!-- your app's js -->
+
+<script type="text/javascript" charset="UTF-8" src="./localhost_files/common.js"></script><script type="text/javascript" charset="UTF-8" src="./localhost_files/map.js"></script><script type="text/javascript" charset="UTF-8" src="./localhost_files/util.js"></script><script type="text/javascript" charset="UTF-8" src="./localhost_files/controls.js"></script><script type="text/javascript" charset="UTF-8" src="./localhost_files/drawing_impl.js"></script><script type="text/javascript" charset="UTF-8" src="./localhost_files/onion.js"></script><script type="text/javascript" charset="UTF-8" src="./localhost_files/stats.js"></script><script type="text/javascript" charset="UTF-8" src="./localhost_files/geometry.js"></script><script type="text/javascript" charset="UTF-8" src="./localhost_files/poly.js"></script></head>
+<body ng-app="starter" class="grade-b platform-browser platform-android platform-android4 platform-android4_0 platform-ready">
+  <header>
+    <nav class=" red darken-4">
+      <ul id="slide-out" class="side-nav" style="left: -250px;">
+        <li class="active"><a><i class="ion-android-more-vertical"></i> Menu</a></li>
+        <li><a ui-sref="form"><i class="ion-clipboard"></i> Ingresar lugar</a></li>
+        <li><a ui-sref="map"><i class="ion-android-pin"></i> Ver Mapa</a></li>
+      </ul>
+      <a href="http://localhost:8100/#" data-activates="slide-out" class="button-collapse"><i class="ion-android-more-horizontal"></i></a>
+    </nav>
+  </header>
+
+  <ion-nav-view class="view-container" nav-view-transition="android" nav-view-direction="none" nav-swipe="">
+
+  <ion-view class="map-view pane" nav-view="active" style="transform: translate3d(0%, 0px, 0px);">
+<ion-content data-tap-disabled="true" class="scroll-content ionic-scroll"><div class="scroll" style="transform: translate3d(0px, 0px, 0px) scale(1);">
+
+<div id="map-container" class="hide">
+	<!-- Este div se va a esconder y va a dar paso al div que contiene el formulario -->
+	<input type="text" id="input-aux" style="display:none;">
+	<div id="panel">
+		<div id="color-palette"><span class="color-button" style="border: 2px solid rgb(119, 136, 153); background-color: rgb(30, 144, 255);"></span><span class="color-button" style="border: 2px solid rgb(255, 255, 255); background-color: rgb(255, 20, 147);"></span><span class="color-button" style="border: 2px solid rgb(255, 255, 255); background-color: rgb(50, 205, 50);"></span><span class="color-button" style="border: 2px solid rgb(255, 255, 255); background-color: rgb(255, 140, 0);"></span><span class="color-button" style="border: 2px solid rgb(255, 255, 255); background-color: rgb(75, 0, 130);"></span></div>
+		<div>
+			<button id="delete-button">Delete Selected Shape</button>
+		</div>
+	</div>
+	<div id="map" style="position: relative; overflow: hidden; transform: translateZ(0px); background-color: rgb(229, 227, 223);"><div class="gm-style" style="position: absolute; left: 0px; top: 0px; overflow: hidden; width: 100%; height: 100%; z-index: 0;"><div style="position: absolute; left: 0px; top: 0px; overflow: hidden; width: 100%; height: 100%; z-index: 0;"><div style="position: absolute; left: 0px; top: 0px; z-index: 1; width: 100%; transform-origin: 0px 0px 0px; transform: matrix(1, 0, 0, 1, 0, 0);"><div style="transform: translateZ(0px); position: absolute; left: 0px; top: 0px; z-index: 100; width: 100%;"><div style="position: absolute; left: 0px; top: 0px; z-index: 0;"><div aria-hidden="true" style="position: absolute; left: 0px; top: 0px; z-index: 1; visibility: inherit;"><div style="width: 256px; height: 256px; transform: translateZ(0px); position: absolute; left: 306px; top: 65px;"></div><div style="width: 256px; height: 256px; transform: translateZ(0px); position: absolute; left: 306px; top: 321px;"></div><div style="width: 256px; height: 256px; transform: translateZ(0px); position: absolute; left: 50px; top: 65px;"></div><div style="width: 256px; height: 256px; transform: translateZ(0px); position: absolute; left: 50px; top: 321px;"></div><div style="width: 256px; height: 256px; transform: translateZ(0px); position: absolute; left: 562px; top: 65px;"></div><div style="width: 256px; height: 256px; transform: translateZ(0px); position: absolute; left: 562px; top: 321px;"></div><div style="width: 256px; height: 256px; transform: translateZ(0px); position: absolute; left: 306px; top: -191px;"></div><div style="width: 256px; height: 256px; transform: translateZ(0px); position: absolute; left: 306px; top: 577px;"></div><div style="width: 256px; height: 256px; transform: translateZ(0px); position: absolute; left: 50px; top: 577px;"></div><div style="width: 256px; height: 256px; transform: translateZ(0px); position: absolute; left: 50px; top: -191px;"></div><div style="width: 256px; height: 256px; transform: translateZ(0px); position: absolute; left: 562px; top: -191px;"></div><div style="width: 256px; height: 256px; transform: translateZ(0px); position: absolute; left: 562px; top: 577px;"></div><div style="width: 256px; height: 256px; transform: translateZ(0px); position: absolute; left: -206px; top: 321px;"></div><div style="width: 256px; height: 256px; transform: translateZ(0px); position: absolute; left: 818px; top: 321px;"></div><div style="width: 256px; height: 256px; transform: translateZ(0px); position: absolute; left: 818px; top: 65px;"></div><div style="width: 256px; height: 256px; transform: translateZ(0px); position: absolute; left: -206px; top: 65px;"></div><div style="width: 256px; height: 256px; transform: translateZ(0px); position: absolute; left: 818px; top: -191px;"></div><div style="width: 256px; height: 256px; transform: translateZ(0px); position: absolute; left: -206px; top: -191px;"></div><div style="width: 256px; height: 256px; transform: translateZ(0px); position: absolute; left: -206px; top: 577px;"></div><div style="width: 256px; height: 256px; transform: translateZ(0px); position: absolute; left: 818px; top: 577px;"></div></div></div></div><div style="transform: translateZ(0px); position: absolute; left: 0px; top: 0px; z-index: 101; width: 100%;"><div style="position: absolute; left: 0px; top: 0px; z-index: 30;"><div aria-hidden="true" style="position: absolute; left: 0px; top: 0px; z-index: 1; visibility: inherit;"><div style="width: 256px; height: 256px; overflow: hidden; transform: translateZ(0px); position: absolute; left: 306px; top: 65px;"></div><div style="width: 256px; height: 256px; overflow: hidden; transform: translateZ(0px); position: absolute; left: 306px; top: 321px;"></div><div style="width: 256px; height: 256px; overflow: hidden; transform: translateZ(0px); position: absolute; left: 50px; top: 65px;"><canvas width="512" height="512" draggable="false" style="width: 256px; height: 256px; -webkit-user-select: none; position: absolute; left: 0px; top: 0px;"></canvas></div><div style="width: 256px; height: 256px; overflow: hidden; transform: translateZ(0px); position: absolute; left: 50px; top: 321px;"><canvas width="512" height="512" draggable="false" style="width: 256px; height: 256px; -webkit-user-select: none; position: absolute; left: 0px; top: 0px;"></canvas></div><div style="width: 256px; height: 256px; overflow: hidden; transform: translateZ(0px); position: absolute; left: 562px; top: 65px;"></div><div style="width: 256px; height: 256px; overflow: hidden; transform: translateZ(0px); position: absolute; left: 562px; top: 321px;"></div><div style="width: 256px; height: 256px; overflow: hidden; transform: translateZ(0px); position: absolute; left: 306px; top: -191px;"></div><div style="width: 256px; height: 256px; overflow: hidden; transform: translateZ(0px); position: absolute; left: 306px; top: 577px;"></div><div style="width: 256px; height: 256px; overflow: hidden; transform: translateZ(0px); position: absolute; left: 50px; top: 577px;"></div><div style="width: 256px; height: 256px; overflow: hidden; transform: translateZ(0px); position: absolute; left: 50px; top: -191px;"></div><div style="width: 256px; height: 256px; overflow: hidden; transform: translateZ(0px); position: absolute; left: 562px; top: -191px;"></div><div style="width: 256px; height: 256px; overflow: hidden; transform: translateZ(0px); position: absolute; left: 562px; top: 577px;"></div><div style="width: 256px; height: 256px; overflow: hidden; transform: translateZ(0px); position: absolute; left: -206px; top: 321px;"></div><div style="width: 256px; height: 256px; overflow: hidden; transform: translateZ(0px); position: absolute; left: 818px; top: 321px;"></div><div style="width: 256px; height: 256px; overflow: hidden; transform: translateZ(0px); position: absolute; left: 818px; top: 65px;"></div><div style="width: 256px; height: 256px; overflow: hidden; transform: translateZ(0px); position: absolute; left: -206px; top: 65px;"></div><div style="width: 256px; height: 256px; overflow: hidden; transform: translateZ(0px); position: absolute; left: 818px; top: -191px;"></div><div style="width: 256px; height: 256px; overflow: hidden; transform: translateZ(0px); position: absolute; left: -206px; top: -191px;"></div><div style="width: 256px; height: 256px; overflow: hidden; transform: translateZ(0px); position: absolute; left: -206px; top: 577px;"></div><div style="width: 256px; height: 256px; overflow: hidden; transform: translateZ(0px); position: absolute; left: 818px; top: 577px;"></div></div></div></div><div style="transform: translateZ(0px); position: absolute; left: 0px; top: 0px; z-index: 102; width: 100%;"></div><div style="transform: translateZ(0px); position: absolute; left: 0px; top: 0px; z-index: 103; width: 100%;"></div><div style="position: absolute; left: 0px; top: 0px; z-index: 0;"><div aria-hidden="true" style="position: absolute; left: 0px; top: 0px; z-index: 1; visibility: inherit;"><div style="transform: translateZ(0px); position: absolute; left: 306px; top: 65px; transition: opacity 200ms ease-out;"><img src="./localhost_files/kh" draggable="false" alt="" style="position: absolute; left: 0px; top: 0px; width: 256px; height: 256px; -webkit-user-select: none; border: 0px; padding: 0px; margin: 0px;"></div><div style="transform: translateZ(0px); position: absolute; left: 306px; top: 321px; transition: opacity 200ms ease-out;"><img src="./localhost_files/kh(1)" draggable="false" alt="" style="position: absolute; left: 0px; top: 0px; width: 256px; height: 256px; -webkit-user-select: none; border: 0px; padding: 0px; margin: 0px;"></div><div style="transform: translateZ(0px); position: absolute; left: 50px; top: 65px; transition: opacity 200ms ease-out;"><img src="./localhost_files/kh(2)" draggable="false" alt="" style="position: absolute; left: 0px; top: 0px; width: 256px; height: 256px; -webkit-user-select: none; border: 0px; padding: 0px; margin: 0px;"></div><div style="transform: translateZ(0px); position: absolute; left: 50px; top: 321px; transition: opacity 200ms ease-out;"><img src="./localhost_files/kh(3)" draggable="false" alt="" style="position: absolute; left: 0px; top: 0px; width: 256px; height: 256px; -webkit-user-select: none; border: 0px; padding: 0px; margin: 0px;"></div><div style="transform: translateZ(0px); position: absolute; left: 562px; top: 65px; transition: opacity 200ms ease-out;"><img src="./localhost_files/kh(4)" draggable="false" alt="" style="position: absolute; left: 0px; top: 0px; width: 256px; height: 256px; -webkit-user-select: none; border: 0px; padding: 0px; margin: 0px;"></div><div style="transform: translateZ(0px); position: absolute; left: 562px; top: 321px; transition: opacity 200ms ease-out;"><img src="./localhost_files/kh(5)" draggable="false" alt="" style="position: absolute; left: 0px; top: 0px; width: 256px; height: 256px; -webkit-user-select: none; border: 0px; padding: 0px; margin: 0px;"></div><div style="transform: translateZ(0px); position: absolute; left: 306px; top: -191px; transition: opacity 200ms ease-out;"><img src="./localhost_files/kh(6)" draggable="false" alt="" style="position: absolute; left: 0px; top: 0px; width: 256px; height: 256px; -webkit-user-select: none; border: 0px; padding: 0px; margin: 0px;"></div><div style="transform: translateZ(0px); position: absolute; left: 306px; top: 577px; transition: opacity 200ms ease-out;"><img src="./localhost_files/kh(7)" draggable="false" alt="" style="position: absolute; left: 0px; top: 0px; width: 256px; height: 256px; -webkit-user-select: none; border: 0px; padding: 0px; margin: 0px;"></div><div style="transform: translateZ(0px); position: absolute; left: 50px; top: 577px; transition: opacity 200ms ease-out;"><img src="./localhost_files/kh(8)" draggable="false" alt="" style="position: absolute; left: 0px; top: 0px; width: 256px; height: 256px; -webkit-user-select: none; border: 0px; padding: 0px; margin: 0px;"></div><div style="transform: translateZ(0px); position: absolute; left: 50px; top: -191px; transition: opacity 200ms ease-out;"><img src="./localhost_files/kh(9)" draggable="false" alt="" style="position: absolute; left: 0px; top: 0px; width: 256px; height: 256px; -webkit-user-select: none; border: 0px; padding: 0px; margin: 0px;"></div><div style="transform: translateZ(0px); position: absolute; left: 562px; top: -191px; transition: opacity 200ms ease-out;"><img src="./localhost_files/kh(10)" draggable="false" alt="" style="position: absolute; left: 0px; top: 0px; width: 256px; height: 256px; -webkit-user-select: none; border: 0px; padding: 0px; margin: 0px;"></div><div style="transform: translateZ(0px); position: absolute; left: 562px; top: 577px; transition: opacity 200ms ease-out;"><img src="./localhost_files/kh(11)" draggable="false" alt="" style="position: absolute; left: 0px; top: 0px; width: 256px; height: 256px; -webkit-user-select: none; border: 0px; padding: 0px; margin: 0px;"></div><div style="transform: translateZ(0px); position: absolute; left: -206px; top: 321px; transition: opacity 200ms ease-out;"><img src="./localhost_files/kh(12)" draggable="false" alt="" style="position: absolute; left: 0px; top: 0px; width: 256px; height: 256px; -webkit-user-select: none; border: 0px; padding: 0px; margin: 0px;"></div><div style="transform: translateZ(0px); position: absolute; left: 818px; top: 321px; transition: opacity 200ms ease-out;"><img src="./localhost_files/kh(13)" draggable="false" alt="" style="position: absolute; left: 0px; top: 0px; width: 256px; height: 256px; -webkit-user-select: none; border: 0px; padding: 0px; margin: 0px;"></div><div style="transform: translateZ(0px); position: absolute; left: 818px; top: 65px; transition: opacity 200ms ease-out;"><img src="./localhost_files/kh(14)" draggable="false" alt="" style="position: absolute; left: 0px; top: 0px; width: 256px; height: 256px; -webkit-user-select: none; border: 0px; padding: 0px; margin: 0px;"></div><div style="transform: translateZ(0px); position: absolute; left: -206px; top: 65px; transition: opacity 200ms ease-out;"><img src="./localhost_files/kh(15)" draggable="false" alt="" style="position: absolute; left: 0px; top: 0px; width: 256px; height: 256px; -webkit-user-select: none; border: 0px; padding: 0px; margin: 0px;"></div><div style="transform: translateZ(0px); position: absolute; left: 818px; top: -191px; transition: opacity 200ms ease-out;"><img src="./localhost_files/kh(16)" draggable="false" alt="" style="position: absolute; left: 0px; top: 0px; width: 256px; height: 256px; -webkit-user-select: none; border: 0px; padding: 0px; margin: 0px;"></div><div style="transform: translateZ(0px); position: absolute; left: -206px; top: -191px; transition: opacity 200ms ease-out;"><img src="./localhost_files/kh(17)" draggable="false" alt="" style="position: absolute; left: 0px; top: 0px; width: 256px; height: 256px; -webkit-user-select: none; border: 0px; padding: 0px; margin: 0px;"></div><div style="transform: translateZ(0px); position: absolute; left: -206px; top: 577px; transition: opacity 200ms ease-out;"><img src="./localhost_files/kh(18)" draggable="false" alt="" style="position: absolute; left: 0px; top: 0px; width: 256px; height: 256px; -webkit-user-select: none; border: 0px; padding: 0px; margin: 0px;"></div><div style="transform: translateZ(0px); position: absolute; left: 818px; top: 577px; transition: opacity 200ms ease-out;"><img src="./localhost_files/kh(19)" draggable="false" alt="" style="position: absolute; left: 0px; top: 0px; width: 256px; height: 256px; -webkit-user-select: none; border: 0px; padding: 0px; margin: 0px;"></div></div></div></div><div style="position: absolute; left: 0px; top: 0px; z-index: 2; width: 100%; height: 100%;"></div><div style="position: absolute; left: 0px; top: 0px; z-index: 3; width: 100%; transform-origin: 0px 0px 0px; transform: matrix(1, 0, 0, 1, 0, 0);"><div style="transform: translateZ(0px); position: absolute; left: 0px; top: 0px; z-index: 104; width: 100%;"></div><div style="transform: translateZ(0px); position: absolute; left: 0px; top: 0px; z-index: 105; width: 100%;"></div><div style="transform: translateZ(0px); position: absolute; left: 0px; top: 0px; z-index: 106; width: 100%;"><div style="position: absolute; left: 0px; top: 0px; z-index: 0;"><div style="width: 29px; height: 29px; transform: translateZ(0px); position: absolute; left: 148px; top: 87px;"><div style="position: absolute; left: 9px; top: 9px; width: 9px; height: 9px; border: 1px solid rgb(30, 144, 255); border-radius: 6px; opacity: 1; background-color: white;"></div></div><div style="width: 29px; height: 29px; transform: translateZ(0px); position: absolute; left: 64px; top: 324px;"><div style="position: absolute; left: 9px; top: 9px; width: 9px; height: 9px; border: 1px solid rgb(30, 144, 255); border-radius: 6px; opacity: 1; background-color: white;"></div></div><div style="width: 29px; height: 29px; transform: translateZ(0px); position: absolute; left: 190px; top: 299px;"><div style="position: absolute; left: 9px; top: 9px; width: 9px; height: 9px; border: 1px solid rgb(30, 144, 255); border-radius: 6px; opacity: 1; background-color: white;"></div></div></div><div style="position: absolute; left: 0px; top: 0px; z-index: -1;"><div style="width: 29px; height: 29px; transform: translateZ(0px); position: absolute; left: 106px; top: 206px;"><div style="position: absolute; left: 9px; top: 9px; width: 9px; height: 9px; border: 1px solid rgb(30, 144, 255); border-radius: 6px; opacity: 0.5; background-color: white;"></div></div><div style="width: 29px; height: 29px; transform: translateZ(0px); position: absolute; left: 127px; top: 312px;"><div style="position: absolute; left: 9px; top: 9px; width: 9px; height: 9px; border: 1px solid rgb(30, 144, 255); border-radius: 6px; opacity: 0.5; background-color: white;"></div></div><div style="width: 29px; height: 29px; transform: translateZ(0px); position: absolute; left: 169px; top: 193px;"><div style="position: absolute; left: 9px; top: 9px; width: 9px; height: 9px; border: 1px solid rgb(30, 144, 255); border-radius: 6px; opacity: 0.5; background-color: white;"></div></div></div></div><div style="transform: translateZ(0px); position: absolute; left: 0px; top: 0px; z-index: 107; width: 100%;"><div style="z-index: -202; cursor: pointer; transform: translateZ(0px); display: none;"><div style="width: 30px; height: 27px; overflow: hidden; position: absolute;"><img src="./localhost_files/undo_poly.png" draggable="false" style="position: absolute; left: 0px; top: 0px; -webkit-user-select: none; border: 0px; padding: 0px; margin: 0px; width: 90px; height: 27px;"></div></div></div></div></div><div style="margin-left: 5px; margin-right: 5px; z-index: 1000000; position: absolute; left: 0px; bottom: 0px;"><a target="_blank" style="position: static; overflow: visible; float: none; display: inline;" href="https://maps.google.com/maps?ll=52.25097,20.97114&z=16&t=k&hl=en-US&gl=US&mapclient=apiv3" title="Click to see this area on Google Maps"><div style="width: 66px; height: 26px; cursor: pointer;"><img src="./localhost_files/google4_hdpi.png" draggable="false" style="position: absolute; left: 0px; top: 0px; width: 66px; height: 26px; -webkit-user-select: none; border: 0px; padding: 0px; margin: 0px;"></div></a></div><div style="padding: 15px 21px; border: 1px solid rgb(171, 171, 171); font-family: Roboto, Arial, sans-serif; color: rgb(34, 34, 34); box-shadow: rgba(0, 0, 0, 0.2) 0px 4px 16px; z-index: 10000002; display: none; width: 256px; height: 148px; position: absolute; left: 330px; top: 260px; background-color: white;"><div style="padding: 0px 0px 10px; font-size: 16px;">Map Data</div><div style="font-size: 13px;">Imagery ©2015 CNES / Astrium, Cnes/Spot Image, DigitalGlobe, MGGP Aero</div><div style="width: 13px; height: 13px; overflow: hidden; position: absolute; opacity: 0.7; right: 12px; top: 12px; z-index: 10000;"><img src="./localhost_files/mapcnt6.png" draggable="false" style="position: absolute; left: -2px; top: -336px; width: 59px; height: 492px; -webkit-user-select: none; border: 0px; padding: 0px; margin: 0px;"></div><img src="./localhost_files/transparent.png" draggable="false" style="width: 37px; height: 37px; -webkit-user-select: none; border: 0px; padding: 0px; margin: 0px; position: absolute; right: 0px; top: 0px; z-index: 10001; cursor: pointer;"></div><div class="gmnoprint" style="z-index: 1000001; position: absolute; right: 71px; bottom: 0px; width: 350px;"><div draggable="false" class="gm-style-cc" style="-webkit-user-select: none; height: 14px; line-height: 14px;"><div style="opacity: 0.7; width: 100%; height: 100%; position: absolute;"><div style="width: 1px;"></div><div style="width: auto; height: 100%; margin-left: 1px; background-color: rgb(245, 245, 245);"></div></div><div style="position: relative; padding-right: 6px; padding-left: 6px; font-family: Roboto, Arial, sans-serif; font-size: 10px; color: rgb(68, 68, 68); white-space: nowrap; direction: ltr; text-align: right; vertical-align: middle; display: inline-block;"><a style="color: rgb(68, 68, 68); text-decoration: none; cursor: pointer; display: none;">Map Data</a><span>Imagery ©2015 CNES / Astrium, Cnes/Spot Image, DigitalGlobe, MGGP Aero</span></div></div></div><div class="gmnoscreen" style="position: absolute; right: 0px; bottom: 0px;"><div style="font-family: Roboto, Arial, sans-serif; font-size: 11px; color: rgb(68, 68, 68); direction: ltr; text-align: right; background-color: rgb(245, 245, 245);">Imagery ©2015 CNES / Astrium, Cnes/Spot Image, DigitalGlobe, MGGP Aero</div></div><div class="gmnoprint gm-style-cc" draggable="false" style="z-index: 1000001; -webkit-user-select: none; height: 14px; line-height: 14px; position: absolute; right: 0px; bottom: 0px;"><div style="opacity: 0.7; width: 100%; height: 100%; position: absolute;"><div style="width: 1px;"></div><div style="width: auto; height: 100%; margin-left: 1px; background-color: rgb(245, 245, 245);"></div></div><div style="position: relative; padding-right: 6px; padding-left: 6px; font-family: Roboto, Arial, sans-serif; font-size: 10px; color: rgb(68, 68, 68); white-space: nowrap; direction: ltr; text-align: right; vertical-align: middle; display: inline-block;"><a href="https://www.google.com/intl/en-US_US/help/terms_maps.html" target="_blank" style="text-decoration: none; cursor: pointer; color: rgb(68, 68, 68);">Terms of Use</a></div></div><div class="gmnoprint" draggable="false" controlwidth="28" controlheight="55" style="margin: 10px; -webkit-user-select: none; position: absolute; bottom: 69px; right: 28px;"><div class="gmnoprint" controlwidth="28" controlheight="55" style="position: absolute; left: 0px; top: 0px;"><div draggable="false" style="-webkit-user-select: none; box-shadow: rgba(0, 0, 0, 0.298039) 0px 1px 4px -1px; border-radius: 2px; cursor: pointer; width: 28px; height: 55px; background-color: rgb(255, 255, 255);"><div title="Zoom in" style="position: relative; width: 28px; height: 27px; left: 0px; top: 0px;"><div style="overflow: hidden; position: absolute; width: 15px; height: 15px; left: 7px; top: 6px;"><img src="./localhost_files/tmapctrl_hdpi.png" draggable="false" style="position: absolute; left: 0px; top: 0px; -webkit-user-select: none; border: 0px; padding: 0px; margin: 0px; width: 120px; height: 54px;"></div></div><div style="position: relative; overflow: hidden; width: 67%; height: 1px; left: 16%; top: 0px; background-color: rgb(230, 230, 230);"></div><div title="Zoom out" style="position: relative; width: 28px; height: 27px; left: 0px; top: 0px;"><div style="overflow: hidden; position: absolute; width: 15px; height: 15px; left: 7px; top: 6px;"><img src="./localhost_files/tmapctrl_hdpi.png" draggable="false" style="position: absolute; left: 0px; top: -15px; -webkit-user-select: none; border: 0px; padding: 0px; margin: 0px; width: 120px; height: 54px;"></div></div></div></div></div><div class="gmnoprint" style="margin: 5px; z-index: 10; position: absolute; left: 0px; top: 0px;"><div style="float: left; line-height: 0;"><div draggable="false" title="Stop drawing" style="direction: ltr; overflow: hidden; text-align: left; position: relative; color: rgb(0, 0, 0); font-family: Roboto, Arial, sans-serif; -webkit-user-select: none; font-size: 11px; padding: 6px; border-bottom-left-radius: 2px; border-top-left-radius: 2px; -webkit-background-clip: padding-box; box-shadow: rgba(0, 0, 0, 0.298039) 0px 1px 4px -1px; font-weight: 500; background-color: rgb(255, 255, 255); background-clip: padding-box;"><span style="display: inline-block;"><div style="width: 16px; height: 16px; overflow: hidden; position: relative;"><img src="./localhost_files/drawing.png" draggable="false" style="position: absolute; left: 0px; top: -144px; -webkit-user-select: none; border: 0px; padding: 0px; margin: 0px; width: 16px; height: 192px;"></div></span></div></div><div style="float: left; line-height: 0;"><div draggable="false" title="Add a marker" style="direction: ltr; overflow: hidden; text-align: left; position: relative; color: rgb(86, 86, 86); font-family: Roboto, Arial, sans-serif; -webkit-user-select: none; font-size: 11px; padding: 6px; -webkit-background-clip: padding-box; box-shadow: rgba(0, 0, 0, 0.298039) 0px 1px 4px -1px; border-left-width: 0px; background-color: rgb(255, 255, 255); background-clip: padding-box;"><span style="display: inline-block;"><div style="width: 16px; height: 16px; overflow: hidden; position: relative;"><img src="./localhost_files/drawing.png" draggable="false" style="position: absolute; left: 0px; top: -176px; -webkit-user-select: none; border: 0px; padding: 0px; margin: 0px; width: 16px; height: 192px;"></div></span></div></div><div style="float: left; line-height: 0;"><div draggable="false" title="Draw a line" style="direction: ltr; overflow: hidden; text-align: left; position: relative; color: rgb(86, 86, 86); font-family: Roboto, Arial, sans-serif; -webkit-user-select: none; font-size: 11px; padding: 6px; -webkit-background-clip: padding-box; box-shadow: rgba(0, 0, 0, 0.298039) 0px 1px 4px -1px; border-left-width: 0px; background-color: rgb(255, 255, 255); background-clip: padding-box;"><span style="display: inline-block;"><div style="width: 16px; height: 16px; overflow: hidden; position: relative;"><img src="./localhost_files/drawing.png" draggable="false" style="position: absolute; left: 0px; top: -32px; -webkit-user-select: none; border: 0px; padding: 0px; margin: 0px; width: 16px; height: 192px;"></div></span></div></div><div style="float: left; line-height: 0;"><div draggable="false" title="Draw a rectangle" style="direction: ltr; overflow: hidden; text-align: left; position: relative; color: rgb(86, 86, 86); font-family: Roboto, Arial, sans-serif; -webkit-user-select: none; font-size: 11px; padding: 6px; -webkit-background-clip: padding-box; box-shadow: rgba(0, 0, 0, 0.298039) 0px 1px 4px -1px; border-left-width: 0px; background-color: rgb(255, 255, 255); background-clip: padding-box;"><span style="display: inline-block;"><div style="width: 16px; height: 16px; overflow: hidden; position: relative;"><img src="./localhost_files/drawing.png" draggable="false" style="position: absolute; left: 0px; top: -16px; -webkit-user-select: none; border: 0px; padding: 0px; margin: 0px; width: 16px; height: 192px;"></div></span></div></div><div style="float: left; line-height: 0;"><div draggable="false" title="Draw a circle" style="direction: ltr; overflow: hidden; text-align: left; position: relative; color: rgb(86, 86, 86); font-family: Roboto, Arial, sans-serif; -webkit-user-select: none; font-size: 11px; padding: 6px; -webkit-background-clip: padding-box; box-shadow: rgba(0, 0, 0, 0.298039) 0px 1px 4px -1px; border-left-width: 0px; background-color: rgb(255, 255, 255); background-clip: padding-box;"><span style="display: inline-block;"><div style="width: 16px; height: 16px; overflow: hidden; position: relative;"><img src="./localhost_files/drawing.png" draggable="false" style="position: absolute; left: 0px; top: -160px; -webkit-user-select: none; border: 0px; padding: 0px; margin: 0px; width: 16px; height: 192px;"></div></span></div></div><div style="float: left; line-height: 0;"><div draggable="false" title="Draw a shape" style="direction: ltr; overflow: hidden; text-align: left; position: relative; color: rgb(86, 86, 86); font-family: Roboto, Arial, sans-serif; -webkit-user-select: none; font-size: 11px; padding: 6px; border-bottom-right-radius: 2px; border-top-right-radius: 2px; -webkit-background-clip: padding-box; box-shadow: rgba(0, 0, 0, 0.298039) 0px 1px 4px -1px; border-left-width: 0px; background-color: rgb(255, 255, 255); background-clip: padding-box;"><span style="display: inline-block;"><div style="width: 16px; height: 16px; overflow: hidden; position: relative;"><img src="./localhost_files/drawing.png" draggable="false" style="position: absolute; left: 0px; top: -64px; -webkit-user-select: none; border: 0px; padding: 0px; margin: 0px; width: 16px; height: 192px;"></div></span></div></div></div></div></div>
+</div>
+
+<div class="container form-container" id="form" style="
+    overflow-y: scroll;
+    max-height: 640px;
+">
+	<div class="row">
+		<div class="col s12">
+			<div class="row">
+				<div class="input-field col s12">
+					<input id="last_name" type="text" class="validate">
+					<label for="last_name" class="">Nombre</label>
+				</div>
+			</div>
+			<!-- ngRepeat: coord in coords --><div class="row" ng-repeat="coord in coords">
+				<div class="input-field col s6">
+					<input id="latitude" type="text" ng-model="coord.lat" class="validate ng-pristine ng-valid valid ng-touched">
+					<label for="last_name" class="activate active">Latitude</label>
+				</div>
+				<div class="input-field col s6">
+					<input id="longitude" type="text" ng-model="coord.long" class="validate ng-pristine ng-valid valid ng-touched">
+					<label for="last_name" class="activate active">Longitud</label>
+				</div>
+			</div><!-- end ngRepeat: coord in coords --><div class="row" ng-repeat="coord in coords">
+				<div class="input-field col s6">
+					<input id="latitude" type="text" ng-model="coord.lat" class="validate ng-pristine ng-untouched ng-valid">
+					<label for="last_name" class="activate">Latitude</label>
+				</div>
+				<div class="input-field col s6">
+					<input id="longitude" type="text" ng-model="coord.long" class="validate ng-pristine ng-untouched ng-valid">
+					<label for="last_name" class="activate">Longitud</label>
+				</div>
+			</div><!-- end ngRepeat: coord in coords --><div class="row" ng-repeat="coord in coords">
+				<div class="input-field col s6">
+					<input id="latitude" type="text" ng-model="coord.lat" class="validate ng-pristine ng-untouched ng-valid">
+					<label for="last_name" class="activate">Latitude</label>
+				</div>
+				<div class="input-field col s6">
+					<input id="longitude" type="text" ng-model="coord.long" class="validate ng-pristine ng-untouched ng-valid">
+					<label for="last_name" class="activate">Longitud</label>
+				</div>
+			</div><!-- end ngRepeat: coord in coords -->
+			<div class="row">
+				<div class="input-field col s12">
+					<input type="date" class="datepicker" value="">
+					<label for="last_name">Fecha</label>
+				</div>
+			</div>
+			<div class="input-field col s12">
+				<label for="last_name">Tome algunas fotos</label>
+				<br>
+				<br>
+
+				<div class="">
+					<div class="input-field col s2">
+						<a class="btn-floating waves-effect waves-light purple"><i class="material-icons">add</i></a>
+					</div>
+					<div class="input-field col s10">
+						<input id="last_name" type="text" class="validate">
+						<label for="last_name">Nota foto 1</label>
+					</div>
+				</div>
+
+				<div class="">
+					<div class="input-field col s2">
+						<a class="btn-floating waves-effect waves-light purple"><i class="material-icons">add</i></a>
+					</div>
+					<div class="input-field col s10">
+						<input id="last_name" type="text" class="validate">
+						<label for="last_name">Nota foto 2</label>
+					</div>
+				</div>
+
+				<div class="">
+					<div class="input-field col s2">
+						<a class="btn-floating waves-effect waves-light purple"><i class="material-icons">add</i></a>
+					</div>
+					<div class="input-field col s10">
+						<input id="last_name" type="text" class="validate">
+						<label for="last_name">Nota foto 3</label>
+					</div>
+				</div>
+
+				<div class="">
+					<div class="input-field col s2">
+						<a class="btn-floating waves-effect waves-light purple"><i class="material-icons">add</i></a>
+					</div>
+					<div class="input-field col s10">
+						<input id="last_name" type="text" class="validate">
+						<label for="last_name">Nota foto 4</label>
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="input-field col s12">
+						<textarea id="textarea1" class="materialize-textarea"></textarea>
+						<label for="textarea1">Nota de investigacion</label>
+					</div>
+				</div>
+
+				<div class="col s12">
+					<div class="col s2">
+						<p>
+							<input type="checkbox" id="test1">
+							<label for="test1">Oro</label>
+						</p>
+					</div>
+
+				</div>
+				<div class="col s12">
+					<div class="col s2">
+						<p>
+							<input type="checkbox" id="test1">
+							<label for="test1">Oro</label>
+						</p>
+					</div>
+
+				</div>
+				<div class="col s12">
+					<div class="col s2">
+						<p>
+							<input type="checkbox" id="test1">
+							<label for="test1">Oro</label>
+						</p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+		<!-- <div id="modal3" class="modal bottom-sheet" style="z-index: 1003; display: block; opacity: 1; bottom: 0px;">
+							<div class="modal-content">
+								<h4>Modal Header</h4>
+								<ul class="collection">
+									<li class="collection-item avatar">
+										<img src="images/yuna.jpg" alt="" class="circle">
+										<span class="title">Title</span>
+										<p>First Line <br> Second Line </p>
+										<a href="#!" class="secondary-content"><i class="material-icons">grade</i></a>
+									</li>
+									<li class="collection-item avatar">
+										<i class="material-icons circle">folder</i>
+										<span class="title">Title</span>
+										<p>First Line <br> Second Line </p>
+										<a href="#!" class="secondary-content"><i class="material-icons">grade</i></a>
+									</li>
+									<li class="collection-item avatar">
+										<i class="material-icons circle green">assessment</i>
+										<span class="title">Title</span>
+										<p>First Line <br> Second Line </p>
+										<a href="#!" class="secondary-content"><i class="material-icons">grade</i></a>
+									</li>
+									<li class="collection-item avatar">
+										<i class="material-icons circle red">play_arrow</i>
+										<span class="title">Title</span>
+										<p>First Line <br> Second Line </p>
+										<a href="#!" class="secondary-content"><i class="material-icons">grade</i></a>
+									</li>
+								</ul>
+							</div>
+						</div> -->
+
+
+
+
+					</div><div class="scroll-bar scroll-bar-v"><div class="scroll-bar-indicator scroll-bar-fade-out" style="transform: translate3d(0px, 0px, 0px) scaleY(1); height: 374px;"></div></div></ion-content>
+
+				</ion-view></ion-nav-view>
+
+
+  <script type="text/javascript" src="./localhost_files/materialize.js"></script>
+
+  <script type="text/javascript">
+  $(".button-collapse").sideNav();
+  </script><div class="drag-target" style="left: 0px; touch-action: pan-y; -webkit-user-drag: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></div>
+
+<script>//<![CDATA[
+document.write('<script src="//' + (location.hostname || 'localhost') + ':35729/livereload.js?snipver=1"><\/script>')
+//]]></script><script src="./localhost_files/livereload.js"></script>
+
+
+<div class="hiddendiv common"></div><div class="backdrop"></div></body></html>
